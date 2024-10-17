@@ -1,6 +1,6 @@
 <template>
   <div id="app" class="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center p-4">
-    <div v-if="isLoggedIn" class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center">
+    <div v-if="!isLoggedIn" class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center">
       <h1 class="text-2xl font-bold text-gray-800 mb-20" dir="rtl">در حال دریافت اطلاعات...</h1>
 
       <div class="text-center ">
@@ -52,7 +52,7 @@
       </div> -->
     </div>
 
-    <div class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center">
+    <div v-else class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center">
       <h2 class="text-2xl font-bold text-gray-800 mb-4">لیست کارهای شما</h2>
 
       <form @submit.prevent="addTodo" class="mb-4 space-y-4" dir="rtl">
