@@ -109,6 +109,7 @@ export default {
       isLoading: false,
       user: null,
       initData: "",
+      expirationTime: 7 * 24 * 60 * 60 * 1000,
     };
   },
   mounted() {
@@ -166,6 +167,28 @@ export default {
     //   }
     // },
 
+    saveTodos() {
+      const data = {
+        todos: this.todos,
+        timestamp: Date.now() 
+      };
+      localStorage.setItem(`todos_${this.user.id}`, JSON.stringify(data));
+    },
+
+    loadTodos() {
+      const storedData = localStorage.getItem(`todos_${this.user.id}`);
+      if (storedData) {
+        const { todos, timestamp } = JSON.parse(storedData);
+        const now = Date.now();
+
+        if (now - timestamp < this.expirationTime) {
+          this.todos = todos; 
+        } else {
+          localStorage.removeItem(`todos_${this.user.id}`); 
+        }
+      }
+    },
+
     addTodo() {
       if (this.newTodoTitle.trim() !== '') {
         this.todos.push({ title: this.newTodoTitle, completed: false });
@@ -183,10 +206,6 @@ export default {
       this.todos.splice(index, 1);
       this.saveTodos(); 
     },
-
-    saveTodos() {
-      localStorage.setItem('todos', JSON.stringify(this.todos));
-    }
   }
 };
 </script>
