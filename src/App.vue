@@ -54,8 +54,8 @@
 
     <div v-else class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center">
       <h2 class="text-2xl font-bold text-gray-800 mb-4">لیست کارهای شما</h2>
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ initData }}</h2>
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ userId }}</h2>
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ log }}</h2>
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ error }}</h2>
 
       <form @submit.prevent="addTodo" class="mb-4 space-y-4" dir="rtl">
         <input v-model="newTodoTitle" 
@@ -112,7 +112,8 @@ export default {
       userId: null,
       initData: "",
       expirationTime: 7 * 24 * 60 * 60 * 1000,
-      error : null
+      error : null,
+      log : null,
     };
   },
   mounted() {
@@ -193,7 +194,12 @@ export default {
         todos: this.todos,
         timestamp: Date.now() 
       };
-      localStorage.setItem(`todos_${this.user.id}`, JSON.stringify(data));
+      try {
+        localStorage.setItem(`todos_${this.userId}`, JSON.stringify(data));
+        this.log = "TODOs saved successfully";
+      } catch (error) {
+        this.error = "Failed to save TODOs:";
+      }
     },
 
     loadTodos() {
