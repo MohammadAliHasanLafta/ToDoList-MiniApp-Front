@@ -54,6 +54,8 @@
 
     <div v-else class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center">
       <h2 class="text-2xl font-bold text-gray-800 mb-4">لیست کارهای شما</h2>
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ initData }}</h2>
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ error }}</h2>
 
       <form @submit.prevent="addTodo" class="mb-4 space-y-4" dir="rtl">
         <input v-model="newTodoTitle" 
@@ -110,6 +112,7 @@ export default {
       userId: null,
       initData: "",
       expirationTime: 7 * 24 * 60 * 60 * 1000,
+      error : null
     };
   },
   mounted() {
@@ -167,7 +170,7 @@ export default {
         this.isLoggedIn = true;
       } catch (error) {
         console.error("Failed to extract User ID:", error);
-        alert("احراز هویت ناموفق بود.");
+        this.error = "احراز هویت ناموفق بود.";
       }
     },
 
