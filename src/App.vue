@@ -103,9 +103,6 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      phoneNumber: '',
-      otp: Array(6).fill(''),
-      otpSent: false,  
       isLoggedIn: false, 
       newTodoTitle: '',
       todos: [],
@@ -118,6 +115,7 @@ export default {
     const tg = window.Telegram.WebApp;
 
     this.initData = tg.initData || "";
+    tg.expand();
 
     this.verifyInitData();
 
