@@ -25,6 +25,7 @@
 
     <div v-else class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center">
       <h2 class="text-2xl font-bold text-gray-800 mb-4">لیست کارهای شما</h2>
+      <h2 class="text-2xl font-bold text-gray-800 mb-4">{{ error }}</h2>
       
 
       <form @submit.prevent="addTodo" class="mb-4 space-y-4" dir="rtl">
