@@ -107,7 +107,7 @@ export default {
       newTodoTitle: '',
       todos: [],
       isLoading: false,
-      user: null,
+      userId: null,
       initData: "",
       expirationTime: 7 * 24 * 60 * 60 * 1000,
     };
@@ -118,7 +118,12 @@ export default {
     this.initData = tg.initData || "";
     tg.expand();
 
-    this.verifyInitData();
+    this.extractUserIdFromInitData();
+
+    if (this.userId) {
+      this.loadTodos();
+    }
+
 
     const savedTodos = localStorage.getItem('todos');
     if (savedTodos) {
@@ -152,6 +157,19 @@ export default {
       this.isLoading = false; 
     }
   },
+
+  extractUserIdFromInitData() {
+      try {
+        const params = new URLSearchParams(this.initData);
+        const user = JSON.parse(params.get("user"));
+        this.userId = user.id; // ذخیره User ID
+        console.log("User ID:", this.userId);
+        this.isLoggedIn = true;
+      } catch (error) {
+        console.error("Failed to extract User ID:", error);
+        alert("احراز هویت ناموفق بود.");
+      }
+    },
 
     // moveToNext(event, index) {
     //   const input = event.target;
