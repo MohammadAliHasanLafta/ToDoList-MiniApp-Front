@@ -101,6 +101,9 @@ export default {
     }
   },
   methods: {
+    delay(ms) {
+      return new Promise((resolve) => setTimeout(resolve, ms));
+    },
 
     extractUserIdFromInitData() {
     try {
@@ -121,9 +124,9 @@ export default {
       this.error = "احراز هویت ناموفق بود.";
     }
     finally{
-        setTimeout(() => {
+      this.delay(4000).then(() => {
         this.isLoggedIn = true;
-      }, 4000);
+      });
     }
   },
 
