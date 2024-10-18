@@ -129,7 +129,7 @@ export default {
 
     async loadTodos() {
       try {
-        const response = await axios.get(`http://192.168.1.5:7298/api/v1/todo/get-all-todos/${this.userId}`);
+        const response = await axios.get(`http://todominiapp.runasp.net/get-all-todos/${this.userId}`);
         this.todos = response.data;
       } catch (error) {
         console.error('Failed to load todos:', error);
@@ -137,19 +137,15 @@ export default {
       }
     },
     async addTodo() {
-      // if (this.newTodoTitle.trim() !== '') {
-      //   const newTodo = {
-      //     context: this.newTodoTitle,
-      //     userId: this.userId,
-      //   };
+      if (this.newTodoTitle.trim() !== '') {
+        const newTodo = {
+          context: this.newTodoTitle,
+          userId: this.userId,
+        };
 
         try {
-          const newTodo = {
-            context: this.newTodoTitle,
-            userId: this.userId,
-          };
           await axios.post(
-            'http://192.168.1.5:7298/api/v1/todo/create-todo',
+            'http://todominiapp.runasp.net/create-todo',
             newTodo,
             { headers: { 'Content-Type': 'application/json' } }
           );
@@ -159,7 +155,7 @@ export default {
         } catch (error) {
           console.error('Failed to add todo:', error);
         }
-      // }
+      }
     },
     async updateTodo(todo) {
       try {
@@ -170,12 +166,11 @@ export default {
         };
 
         await axios.put(
-          `http://192.168.1.5:7298/api/v1/todo/update-todo/${todo.id}`,
+          `http://todominiapp.runasp.net/update-todo/${todo.id}`,
           updatedTodo,
           { headers: { 'Content-Type': 'application/json' } }
         );
 
-        // به‌روزرسانی وضعیت TODO در لیست بدون ریلود
         todo.isComplete = !todo.isComplete;
       } catch (error) {
         console.error('Failed to update todo:', error);
@@ -184,10 +179,9 @@ export default {
     async deleteTodo(todoId) {
       try {
         await axios.delete(
-          `http://192.168.1.5:7298/api/v1/todo/remove-todo/${todoId}`
+          `http://todominiapp.runasp.net/remove-todo/${todoId}`
         );
 
-        // حذف TODO از لیست بدون ریلود
         this.todos = this.todos.filter((t) => t.id !== todoId);
       } catch (error) {
         console.error('Failed to delete todo:', error);
