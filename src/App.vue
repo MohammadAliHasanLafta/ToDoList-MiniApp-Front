@@ -111,7 +111,7 @@ export default {
         this.userId = user.id;
         this.log= "User ID: "+ this.userId;
 
-        this.isLoggedIn = true; 
+         
       } else {
         console.warn("User ID not found in initData.");
         this.error = "مشکل در دریافت اطلاعات کاربر.";
@@ -119,6 +119,9 @@ export default {
     } catch (error) {
       console.error("Failed to extract User ID:", error);
       this.error = "احراز هویت ناموفق بود.";
+    }
+    finally{
+      this.isLoggedIn = true;
     }
   },
 
