@@ -79,22 +79,17 @@ export default {
       isLoggedIn: false,
       newTodoTitle: '',
       todos: [],
-      initData : `
-    query_id=AAEAAQAAAAAAAQAAAABBf7z
-    &user={"id":123456789,"first_name":"John","username":"johndoe"}
-    &auth_date=1697300123
-    &hash=098f6bcd4621d373cade4e832627b4f6
-  `,
+      initData : '',
       userId: null, 
       error: null,
       log: null,
     };
   },
   async mounted() {
-    // const tg = window.Telegram.WebApp;
+    const tg = window.Telegram.WebApp;
 
-    // this.initData = tg.initData || "";
-    // tg.expand();
+    this.initData = tg.initData || "";
+    tg.expand();
 
     this.extractUserIdFromInitData();
 
