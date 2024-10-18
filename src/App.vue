@@ -81,19 +81,21 @@ export default {
       isLoggedIn: false,
       newTodoTitle: '',
       todos: [],
-      initData : '',
+      initData : null,
       userId: null, 
+      username: null,
+      firstName: null,
       error: null,
       log: null,
     };
   },
   async mounted() {
-    const tg = window.Telegram.WebApp;
+    // const tg = window.Telegram.WebApp;
 
-    this.initData = tg.initData || "";
-    tg.expand();
+    // this.initData = tg.initData || "";
+    // tg.expand();
 
-    this.extractUserIdFromInitData();
+    this.extractUserInfoFromInitData();
 
     if (this.userId) {
       this.loadTodos();
@@ -106,7 +108,52 @@ export default {
     delay(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));
     },
+    extractUserInfoFromInitData() {
+      try {
+        const params = new URLSearchParams(this.initData);
+        const user = JSON.parse(params.get("user"));
 
+        if (user && user.id) {
+          this.userId = user.id;
+          this.firstName = user.first_name || "ناشناس";
+          this.username = user.username || "بدون نام‌کاربری";
+
+          this.sendUserInfoToApi();
+        } else {
+          console.warn("User info not found in initData.");
+          this.error = "مشکل در دریافت اطلاعات کاربر.";
+        }
+      } catch (error) {
+        console.error("Failed to extract user info:", error);
+        this.error = "احراز هویت ناموفق بود.";
+      }
+      finally{
+      this.delay(4000).then(() => {
+        this.isLoggedIn = true;
+      });
+    }
+    },
+
+    async sendUserInfoToApi() {
+      try {
+        const response = await axios.post("https://todominiapp.runasp.net/verify-initdata", {
+          initData: this.initData, 
+          userId: this.userId, 
+          userName: this.username,
+          firstName: this.firstName 
+        }, {
+          headers: {
+            'Accept': '*/*',
+            'Content-Type': 'application/json'
+          }
+        });
+
+        console.log("User info sent to API successfully:", response.data);
+      } catch (error) {
+        console.error("Failed to send user info to API:", error);
+        this.error = "ارسال اطلاعات کاربر به API ناموفق بود.";
+      }
+    },
     extractUserIdFromInitData() {
     try {
       const params = new URLSearchParams(this.initData);
