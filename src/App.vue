@@ -121,7 +121,9 @@ export default {
       this.error = "احراز هویت ناموفق بود.";
     }
     finally{
-      this.isLoggedIn = true;
+        setTimeout(() => {
+        this.isLoggedIn = true;
+      }, 4000);
     }
   },
 
