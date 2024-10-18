@@ -129,7 +129,7 @@ export default {
 
     async loadTodos() {
       try {
-        const response = await axios.get(`http://todominiapp.runasp.net/get-all-todos/${this.userId}`);
+        const response = await axios.get(`https://todominiapp.runasp.net/get-all-todos/${this.userId}`);
         this.todos = response.data;
       } catch (error) {
         console.error('Failed to load todos:', error);
@@ -145,7 +145,7 @@ export default {
 
         try {
           await axios.post(
-            'http://todominiapp.runasp.net/create-todo',
+            'https://todominiapp.runasp.net/create-todo',
             newTodo,
             { headers: { 'Content-Type': 'application/json' } }
           );
@@ -166,7 +166,7 @@ export default {
         };
 
         await axios.put(
-          `http://todominiapp.runasp.net/update-todo/${todo.id}`,
+          `https://todominiapp.runasp.net/update-todo/${todo.id}`,
           updatedTodo,
           { headers: { 'Content-Type': 'application/json' } }
         );
@@ -179,7 +179,7 @@ export default {
     async deleteTodo(todoId) {
       try {
         await axios.delete(
-          `http://todominiapp.runasp.net/remove-todo/${todoId}`
+          `https://todominiapp.runasp.net/remove-todo/${todoId}`
         );
 
         this.todos = this.todos.filter((t) => t.id !== todoId);
