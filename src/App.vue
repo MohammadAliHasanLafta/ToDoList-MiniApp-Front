@@ -81,7 +81,7 @@ export default {
       isLoggedIn: false,
       newTodoTitle: '',
       todos: [],
-      initData : null,
+      initData : 'query_id=AAEAAQAAAAAAAQAAAABBf7z&user={"id":123456789,"first_name":"John","username":"johndoe"}&auth_date=1697300123&hash=098f6bcd4621d373cade4e832627b4f6',
       userId: null, 
       username: null,
       firstName: null,
@@ -127,11 +127,7 @@ export default {
         console.error("Failed to extract user info:", error);
         this.error = "احراز هویت ناموفق بود.";
       }
-      finally{
-      this.delay(4000).then(() => {
-        this.isLoggedIn = true;
-      });
-    }
+      
     },
 
     async sendUserInfoToApi() {
@@ -153,6 +149,12 @@ export default {
         console.error("Failed to send user info to API:", error);
         this.error = "ارسال اطلاعات کاربر به API ناموفق بود.";
       }
+      finally{
+        this.delay(4000).then(() => {
+          this.isLoggedIn = true;
+        });
+      }
+      
     },
     extractUserIdFromInitData() {
     try {
