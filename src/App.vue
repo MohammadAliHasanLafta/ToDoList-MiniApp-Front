@@ -1,16 +1,15 @@
 
-
 <template>
-  <div id="app" class="min-h-screen bg-gradient-to-r from-blue-500 to-purple-600 flex items-center justify-center p-4">
-    <div v-if="!isLoggedIn" class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center">
-      <h1 class="text-2xl font-bold text-gray-800 mb-2" dir="rtl">در حال دریافت داده ها،</h1>
-      <h1 class="text-1xl font-bold text-gray-800 mb-10" dir="rtl">لطفاً شکیبا باشید!🙏</h1>
+  <div id="app" class="background-container min-h-screen bg-gradient-to-center from-[#FFAB49] to-[#F5811E] flex items-center justify-center p-4">
+    <div v-if="isLoggedIn" class="bg-[#ffffffb0] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00]">
+      <h1 class="text-2xl font-bold text-[#FF7B0E] mb-2" dir="rtl">در حال دریافت داده ها،</h1>
+      <h1 class="text-1xl font-bold text-[#FF7B0E] mb-10" dir="rtl">لطفاً شکیبا باشید!🙏</h1>
 
       <div class="text-center">
         <div role="status">
           <svg
             aria-hidden="true"
-            class="inline w-8 h-8 text-gray-200 animate-spin dark:text-blue-600 fill-blue-600"
+            class="inline w-8 h-8 text-[#fba446bc] animate-spin dark:text-[#F37F00] fill-[#F37F00]"
             viewBox="0 0 100 101"
             fill="none"
             xmlns="http://www.w3.org/2000/svg">
@@ -26,17 +25,17 @@
       </div>
     </div>
 
-    <div v-else class="bg-white p-8 rounded-xl shadow-lg w-full max-w-md text-center">
+    <div v-else class="bg-[#ffffffb7] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00]">
       <h2 class="text-2xl font-bold text-gray-800 mb-4">لیست کارهای شما</h2>
 
       <form @submit.prevent="addTodo" class="mb-4 space-y-4" dir="rtl">
         <input
           v-model="newTodoTitle"
           placeholder="کار جدید خود را اضافه کنید..."
-          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-500" />
+          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F37F00]" />
         <button
           type="submit"
-          class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-lg transition-colors">
+          class="w-full bg-[#FF8100] hover:bg-[#FFA242] text-white font-semibold py-2 px-4 rounded-lg transition-colors">
           اضافه کردن
         </button>
       </form>
@@ -55,19 +54,18 @@
             <div class="flex space-x-2">
               <button
                 @click="updateTodo(todo)"
-                class="bg-green-500 hover:bg-green-600 text-white py-1 px-2 rounded-lg ml-2">
+              class="bg-[#38EB02] hover:bg-[#79ff50] text-white py-1 px-2 rounded-lg ml-2">
                 {{ todo.isComplete ? 'واگرد' : 'انجام شد' }}
               </button>
               <button
                 @click="deleteTodo(todo.id)"
-                class="bg-red-500 hover:bg-red-600 text-white py-1 px-2 rounded-lg">
+                class="bg-[#FE0000] hover:bg-[#FF1D01] text-white py-1 px-2 rounded-lg">
                 حذف
               </button>
             </div>
           </li>
         </ul>
-      </div>
-      
+      </div> 
     </div>
   </div>
 </template>
@@ -248,5 +246,22 @@ export default {
 <style>
 .line-through {
   text-decoration: line-through;
+}
+.background-container {
+  width: 100vw;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  
+  background-image: 
+  url('../src/assets/background-72f6ad1d\ 1.svg');
+  background-size:cover;
+  background-position: center;
+  background-repeat:repeat;
+  background-color: #ffffff;
+  background-blend-mode: multiply;
+  
+
 }
 </style>
