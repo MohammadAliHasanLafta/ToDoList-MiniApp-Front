@@ -1,7 +1,7 @@
 
 <template>
   <div id="app" class="background-container min-h-screen bg-gradient-to-center from-[#FFAB49] to-[#F5811E] flex items-center justify-center p-4">
-    <div v-if="isLoggedIn" class="bg-[#ffffffb0] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00]">
+    <div v-if="!isLoggedIn" class="bg-[#ffffffb0] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00]">
       <h1 class="text-2xl font-bold text-[#FF7B0E] mb-2" dir="rtl">در حال دریافت داده ها،</h1>
       <h1 class="text-1xl font-bold text-[#FF7B0E] mb-10" dir="rtl">لطفاً شکیبا باشید!🙏</h1>
 
@@ -54,7 +54,7 @@
             <div class="flex space-x-2">
               <button
                 @click="updateTodo(todo)"
-              class="bg-[#38EB02] hover:bg-[#79ff50] text-white py-1 px-2 rounded-lg ml-2">
+              class="bg-[#38EB02] hover:bg-[#62e13c] text-white py-1 px-2 rounded-lg ml-2">
                 {{ todo.isComplete ? 'واگرد' : 'انجام شد' }}
               </button>
               <button
@@ -255,7 +255,7 @@ export default {
   align-items: center;
   
   background-image: 
-  url('../src/assets/background-72f6ad1d\ 1.svg');
+  url('https://raw.githubusercontent.com/MohammadAliHasanLafta/ToDoList-MiniApp-Front/1283f03261437c38e197e6b042c7f55f39aa9eeb/src/assets/background-72f6ad1d%201.svg');
   background-size:cover;
   background-position: center;
   background-repeat:repeat;
