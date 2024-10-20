@@ -54,12 +54,12 @@
             <div class="flex space-x-2">
               <button
                 @click="updateTodo(todo)"
-              class="bg-[#38EB02] hover:bg-[#62e13c] text-white py-1 px-2 rounded-lg ml-2">
+              class="bg-green-400  hover:bg-green-500 text-white py-1 px-2 rounded-lg ml-2">
                 {{ todo.isComplete ? 'واگرد' : 'انجام شد' }}
               </button>
               <button
                 @click="deleteTodo(todo.id)"
-                class="bg-[#FE0000] hover:bg-[#FF1D01] text-white py-1 px-2 rounded-lg">
+                class="bg-red-600 hover:bg-red-500 text-white py-1 px-2 rounded-lg">
                 حذف
               </button>
             </div>
