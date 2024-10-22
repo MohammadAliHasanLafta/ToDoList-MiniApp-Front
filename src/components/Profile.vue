@@ -141,7 +141,7 @@ export default {
       } catch (error) {
         console.error('Failed to delete todo:', error);
       }
-      window.location.reload();
+      window.location.href = "https://todolistminiapp.netlify.app/";
     },
   },
 };
