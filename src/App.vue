@@ -293,7 +293,7 @@ export default {
   align-items: center;
   
   background-image: 
-  url('https://raw.githubusercontent.com/MohammadAliHasanLafta/ToDoList-MiniApp-Front/1283f03261437c38e197e6b042c7f55f39aa9eeb/src/assets/background-72f6ad1d%201.svg');
+  url('https://todolistminiapp.netlify.app/background-72f6ad1d%201.svg');
   background-size:cover;
   background-position: center;
   background-repeat:repeat;
