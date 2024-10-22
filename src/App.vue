@@ -72,7 +72,7 @@
           </router-link>
 
           <router-link
-            to="/todos"
+            to="/"
             class="flex flex-col items-center text-center text-base md:flex-row md:gap-2 md:px-4 py-2"
             active-class="text-[#e06411]"
           > 

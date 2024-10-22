@@ -9,9 +9,8 @@ import Profile from '../src/components/Profile.vue';
 
 const routes = [
   { path: '/app', component: App },
-  { path: '/todos', component: TodoList },
+  { path: '/', component: TodoList },
   { path: '/profile', component: Profile },
-  { path: '/', redirect: '/todos' }
 ];
 
 const router = createRouter({
