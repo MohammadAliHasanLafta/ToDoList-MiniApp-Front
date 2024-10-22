@@ -1,7 +1,8 @@
 
 <template>
   <div id="app" class="background-container min-h-screen bg-gradient-to-center from-[#FFAB49] to-[#F5811E] flex items-center justify-center p-4">
-    <div v-if="!isLoggedIn" class="bg-[#ffffffb0] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00]">
+    <div v-if="!isLoggedIn && !showOtp" class="bg-[#ffffffb0] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00]">
+
       <h1 class="text-2xl font-bold text-[#FF7B0E] mb-2" dir="rtl">در حال دریافت داده ها،</h1>
       <h1 class="text-1xl font-bold text-[#FF7B0E] mb-10" dir="rtl">لطفاً شکیبا باشید!🙏</h1>
 
@@ -25,60 +26,84 @@
       </div>
     </div>
 
-    <div v-else class="bg-[#ffffffb7] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00]">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4">لیست کارهای شما</h2>
+    <div v-else-if="showOtp" class="bg-[#ffffffb0] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00]">
+      <h2 class="text-2xl font-bold mb-4" dir="rtl">ورود</h2>
+      <form v-if="!otpSent" @submit.prevent="requestOtp" class="mb-4 space-y-4">
+        <input v-model="phoneNumber" placeholder="شماره تلفن..." class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F37F00]" required  dir="rtl"/>
+        <button type="submit" class="w-full bg-[#FF8100] hover:bg-[#FFA242] text-white py-2 px-4 rounded-lg">درخواست کد</button>
 
-      <form @submit.prevent="addTodo" class="mb-4 space-y-4" dir="rtl">
-        <input
-          v-model="newTodoTitle"
-          placeholder="کار جدید خود را اضافه کنید..."
-          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F37F00]" />
-        <button
-          type="submit"
-          class="w-full bg-[#FF8100] hover:bg-[#FFA242] text-white font-semibold py-2 px-4 rounded-lg transition-colors">
-          اضافه کردن
-        </button>
       </form>
 
-      <div v-if="todos.length === 0" class="text-center">
-        <p dir="rtl">هیچ کاری ثبت نشده است.</p>
-      </div>
-
-      <div v-else class="overflow-y-auto max-h-40">
-        <ul class="space-y-2" dir="rtl">
-          <li
-            v-for="todo in todos"
-            :key="todo.id"
-            class="flex justify-between items-center bg-gray-100 p-2 rounded-lg">
-            <span :class="{ 'line-through': todo.isComplete }">{{ todo.context }}</span>
-            <div class="flex space-x-2">
-              <button
-                @click="updateTodo(todo)"
-              class="bg-green-400  hover:bg-green-500 text-white py-1 px-2 rounded-lg ml-2">
-                {{ todo.isComplete ? 'واگرد' : 'انجام شد' }}
-              </button>
-              <button
-                @click="deleteTodo(todo.id)"
-                class="bg-red-600 hover:bg-red-500 text-white py-1 px-2 rounded-lg">
-                حذف
-              </button>
-            </div>
-          </li>
-        </ul>
-      </div> 
+      <form v-else @submit.prevent="verifyOtp" class="space-y-4">
+        <h2 class="text-0xl font-bold mb-0" dir="rtl">کد ارسال شده به {{ phoneNumber }} را وارد نمایید.</h2>
+        <button @click="editPhoneNumber" class="text-sm text-blue-500 hover:underline">
+            ویرایش شماره
+        </button>
+        <div class="flex justify-between space-x-2">
+          <input v-for="(digit, index) in otpCode" :key="index" type="text" maxlength="1"
+            v-model="otpCode[index]" 
+            @input="moveToNext($event, index)" 
+            @keydown.backspace="moveToPrev($event, index)"
+            class="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 text-center border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-lg" />
+        </div>
+        <button @click="verifyOtp" 
+          class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-3 rounded-lg transition-colors">
+          ثبت کد
+        </button>
+      </form>
     </div>
+    <div v-else>
+      <div class="flex flex-col">
+        <router-view 
+          :userId="userId" 
+          :phoneNumber="phoneNumber" 
+          class="bg-[#ffffffb0] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00] mx-auto">
+        </router-view>
+
+        <nav 
+          class="fixed bottom-0 right-0 w-full bg-[#ffffff00] text-[#285653] flex justify-around py-3 md:bottom-auto md:right-0 md:top-0 md:h-full md:w-48 md:flex-col md:justify-start" dir="rtl">
+          <router-link
+            to="/profile"
+            class="flex flex-col items-center text-center text-base md:flex-row md:gap-2 md:px-4 py-2"
+            active-class="text-[#e06411]"
+          > 
+            <i class="fa-solid fa-address-card text-xl"></i>
+            <span>حساب کاربری</span>
+          </router-link>
+
+          <router-link
+            to="/todos"
+            class="flex flex-col items-center text-center text-base md:flex-row md:gap-2 md:px-4 py-2"
+            active-class="text-[#e06411]"
+          > 
+            <i class="fa-solid fa-rectangle-list text-xl"></i>
+            <span>لیست کارها</span>
+          </router-link>
+        </nav>
+      </div>
+    </div>
+    
   </div>
 </template>
 
 <script>
 import axios from 'axios';
+import todolist from './components/ToDoList.vue';
 
 export default {
+  components: {
+    todolist,
+  },
   data() {
     return {
+      isLoading: false,
       isLoggedIn: false,
       newTodoTitle: '',
       todos: [],
+      showOtp: false,
+      otpSent: false,
+      phoneNumber: null,
+      otpCode: Array(6).fill(''),
       initData : null,
       userId: null, 
       username: null,
@@ -89,20 +114,74 @@ export default {
   },
   async mounted() {
     const tg = window.Telegram.WebApp;
-
-    this.initData = tg.initData || "";
+    this.initData = tg?.initData || "";
     tg.expand();
 
-    this.extractUserInfoFromInitData();
-
-    if (this.userId) {
-      this.loadTodos();
+    if (this.initData != "") {
+      await this.extractUserInfoFromInitData();
     } else {
-      console.error("User ID not found in initData.");
-      this.error = "مشکل در دریافت اطلاعات کاربر.";
+      await this.delay(2000).then(() => {
+          this.showOtp = true;
+        });
+        
     }
   },
   methods: {
+    moveToNext(event, index) {
+      const input = event.target;
+      if (input.value.length === 1 && input.nextElementSibling) {
+        input.nextElementSibling.focus();
+      }
+    },
+    moveToPrev(event, index) {
+      const input = event.target;
+      if (event.key === 'Backspace' && input.value === '' && input.previousElementSibling) {
+        input.previousElementSibling.focus(); 
+      }
+    },
+    async requestOtp() {
+      try {
+        await axios.post("https://todominiapp.runasp.net/send-otp", {
+          phoneNumber: this.phoneNumber
+        }, {
+          headers: {
+            'Accept': '*/*',
+            'Content-Type': 'application/json'
+          }
+        });
+        this.otpSent = true;
+      } catch (error) {
+        console.error("Failed to request OTP:", error);
+      }
+    },
+    async verifyOtp() {
+      try {
+        const response = await axios.post('https://todominiapp.runasp.net/verify-otp', {
+          phoneNumber: this.phoneNumber,
+          otp: this.otpCode.join('')
+        }, {
+          headers: {
+            'Accept': '*/*',
+            'Content-Type': 'application/json'
+          }
+        });
+        console.log("this befor if = "+this.isLoggedIn)
+        if (response.status == 200) {
+          console.log("this logged in = "+this.isLoggedIn)
+        }
+      } catch (error) {
+        console.error("Failed to verify OTP:", error);
+      } finally{
+        this.isLoggedIn = true;
+        this.showOtp = false;
+        this.isExist = false;
+      }
+    },
+    editPhoneNumber() {
+      this.otpSent = false;
+      this.phoneNumber = ''; 
+      this.otpCode = Array(6).fill(''); 
+    },
     delay(ms) {
       return new Promise((resolve) => setTimeout(resolve, ms));
     },
@@ -131,26 +210,28 @@ export default {
     async sendUserInfoToApi() {
       try {
         const response = await axios.post("https://todominiapp.runasp.net/verify-initdata", {
-          initData: this.initData, 
-          userId: this.userId, 
-          userName: this.username,
-          firstName: this.firstName 
+          initData: this.initData,
+          firstName: this.firstName,
+          userName: this.username, 
+          userId: this.userId
         }, {
           headers: {
             'Accept': '*/*',
             'Content-Type': 'application/json'
           }
         });
-
+        console.log(response+" and user id = "+this.userId);
         console.log("User info sent to API successfully:", response.data);
       } catch (error) {
         console.error("Failed to send user info to API:", error);
         this.error = "ارسال اطلاعات کاربر به API ناموفق بود.";
       }
       finally{
-        this.delay(4000).then(() => {
+        this.delay(2000).then(() => {
           this.isLoggedIn = true;
+          this.isExist = false;
         });
+
       }
       
     },
@@ -178,67 +259,6 @@ export default {
       });
     }
   },
-
-    async loadTodos() {
-      try {
-        const response = await axios.get(`https://todominiapp.runasp.net/get-all-todos/${this.userId}`);
-        this.todos = response.data;
-      } catch (error) {
-        console.error('Failed to load todos:', error);
-        this.error = 'مشکل در دریافت لیست کارها';
-      }
-    },
-    async addTodo() {
-      if (this.newTodoTitle.trim() !== '') {
-        const newTodo = {
-          context: this.newTodoTitle,
-          userId: this.userId,
-        };
-
-        try {
-          await axios.post(
-            'https://todominiapp.runasp.net/create-todo',
-            newTodo,
-            { headers: { 'Content-Type': 'application/json' } }
-          );
-
-          this.todos.push(this.loadTodos());
-          this.newTodoTitle = '';
-        } catch (error) {
-          console.error('Failed to add todo:', error);
-        }
-      }
-    },
-    async updateTodo(todo) {
-      try {
-        const updatedTodo = {
-          id: todo.id,
-          context: todo.context,
-          isComplete: !todo.isComplete,
-        };
-
-        await axios.put(
-          `https://todominiapp.runasp.net/update-todo/${todo.id}`,
-          updatedTodo,
-          { headers: { 'Content-Type': 'application/json' } }
-        );
-
-        todo.isComplete = !todo.isComplete;
-      } catch (error) {
-        console.error('Failed to update todo:', error);
-      }
-    },
-    async deleteTodo(todoId) {
-      try {
-        await axios.delete(
-          `https://todominiapp.runasp.net/remove-todo/${todoId}`
-        );
-
-        this.todos = this.todos.filter((t) => t.id !== todoId);
-      } catch (error) {
-        console.error('Failed to delete todo:', error);
-      }
-    },
   },
 };
 </script>
