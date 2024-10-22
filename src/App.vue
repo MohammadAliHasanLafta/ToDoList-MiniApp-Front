@@ -120,9 +120,7 @@ export default {
     if (this.initData != "") {
       await this.extractUserInfoFromInitData();
     } else {
-      await this.delay(2000).then(() => {
-          this.showOtp = true;
-        });
+      this.showOtp = true;
         
     }
   },
