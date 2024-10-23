@@ -29,7 +29,7 @@
     <div v-else-if="showOtp" class="bg-[#ffffffb0] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00]">
       <h2 class="text-2xl font-bold mb-4" dir="rtl">ورود</h2>
       <form v-if="!otpSent" @submit.prevent="requestOtp" class="mb-4 space-y-4">
-        <input v-model="phoneNumber" placeholder="شماره تلفن..." class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F37F00]" required  dir="rtl"/>
+        <input v-model="phoneNumber" placeholder="شماره موبایل..." class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F37F00]" required  dir="rtl"/>
         <button v-if="!click" type="submit" class="w-full bg-[#FF8100] hover:bg-[#FFA242] text-white py-2 px-4 rounded-lg">درخواست کد</button>
         <div v-else class="text-center">
         <div role="status">
@@ -57,7 +57,7 @@
             ویرایش شماره
         </button>
         <div class="flex justify-between space-x-2">
-          <input v-for="(digit, index) in otpCode" :key="index" type="text" maxlength="1"
+          <input v-for="(digit, index) in otpCode" :key="index" type="number" maxlength="1"
             v-model="otpCode[index]" 
             @input="moveToNext($event, index)" 
             @keydown.backspace="moveToPrev($event, index)"
