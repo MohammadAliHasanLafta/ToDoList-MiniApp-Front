@@ -144,6 +144,9 @@ export default {
       this.$router.push({
           path: '/',
         });
+      if(window.Eitaa.WebApp.initData){
+        window.Eitaa.WebApp.close();
+      }
     },
   },
 };

@@ -3,12 +3,12 @@
       
       <div class="flex justify-center mb-4">
         <img
-          src="https://kavenegar.com/images/logo.svg"
-          alt="کاوه نگار"
+          src="https://icons.veryicon.com/png/o/system/crm-android-app-icon/app-icon-message-selected.png"
+          alt="OTP"
           class="w-32 h-32 rounded-full border-4 border-[#F37F00] shadow-lg object-cover" />
       </div>
   
-      <h2 class="text-1xl font-bold text-gray-800 mb-5">راهنمای وصل کردن سیستم ارسال پیامکی کاوه نگار</h2>
+      <h2 class="text-1xl font-bold text-gray-800 mb-5" dir="rtl">راهنمای وصل کردن سیستم ارسال پیامک (OTP)</h2>
   
       <div class="space-y-4">
         <button
@@ -29,8 +29,11 @@
     },
     methods: {
       async setting() {
-        window.Eitaa.WebApp.openLink("https://kavenegar.com/rest.html");
-        // window.location.href = "https://kavenegar.com/rest.html";
+        if(window.Eitaa.WebApp.initData){
+          window.Eitaa.WebApp.openLink("https://kavenegar.com/rest.html");
+        }
+        
+        window.open("https://kavenegar.com/rest.html", "_blank");
         this.$router.replace({
           path: '/',
         });
