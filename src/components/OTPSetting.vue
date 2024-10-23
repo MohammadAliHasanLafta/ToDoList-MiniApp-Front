@@ -29,7 +29,8 @@
     },
     methods: {
       async setting() {
-        window.location.href = "https://kavenegar.com/rest.html";
+        window.Eitaa.WebApp.openLink("https://kavenegar.com/rest.html");
+        // window.location.href = "https://kavenegar.com/rest.html";
         this.$router.replace({
           path: '/',
         });
