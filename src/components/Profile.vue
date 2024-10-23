@@ -141,12 +141,18 @@ export default {
       } catch (error) {
         console.error('Failed to delete todo:', error);
       }
-      this.$router.push({
-          path: '/',
-        });
       if(window.Eitaa.WebApp.initData){
         window.Eitaa.WebApp.close();
       }
+      else{
+        this.$router.push({
+          path: '/',
+        });
+        setTimeout(function() {
+            window.location.reload();
+        }, 1000);
+      }
+      
     },
   },
 };
