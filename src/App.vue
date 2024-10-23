@@ -78,7 +78,7 @@
         </router-view>
 
         <nav 
-          class="fixed bottom-0 right-0 w-full bg-[#ffffff00] text-[#285653] flex justify-around py-10 md:bottom-auto md:right-0 md:top-0 md:h-full md:w-48 md:flex-col md:justify-start" dir="rtl">
+          class="fixed bottom-0 right-0 w-full bg-[#ffffff00] text-[#285653] flex justify-around md:bottom-auto md:right-0 md:top-0 md:h-full md:w-48 md:flex-col md:justify-start" dir="rtl">
           <router-link
             to="/profile"
             class="flex flex-col items-center text-center text-base md:flex-row md:gap-2 md:px-4 py-2"
@@ -149,7 +149,7 @@ export default {
     if (this.initData != "") {
       await this.extractUserInfoFromInitData();
       window.Eitaa.WebApp.MainButton.enable();
-      window.Eitaa.WebApp.MainButton.setParam({
+      window.Eitaa.WebApp.MainButton.setParams({
         text: "لیست کارها",
         color: "#FF8100",
         text_color: "#FFFFFF",
