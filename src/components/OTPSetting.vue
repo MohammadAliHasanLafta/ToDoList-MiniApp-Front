@@ -30,6 +30,9 @@
     methods: {
       async setting() {
         window.location.href = "https://kavenegar.com/rest.html";
+        this.$router.replace({
+          path: '/',
+        });
       },
     },
   };
