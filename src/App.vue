@@ -248,8 +248,9 @@ export default {
     },
 
     async sendUserInfoToApi() {
+      let response = "";
       try {
-        const response = await axios.post("https://todominiapp.runasp.net/verify-initdata", {
+        response = await axios.post("https://todominiapp.runasp.net/verify-initdata", {
           initData: this.initData,
           firstName: this.firstName,
           lastName: this.lastName, 
@@ -268,11 +269,12 @@ export default {
         this.error = "ارسال اطلاعات کاربر به API ناموفق بود.";
       }
       finally{
-        this.delay(2000).then(() => {
-          this.isLoggedIn = true;
-          this.isExist = false;
-        });
-
+        if(response.data == true) {
+          this.delay(2000).then(() => {
+            this.isLoggedIn = true;
+            this.isExist = false;
+          });
+        }
       }
       
     },
