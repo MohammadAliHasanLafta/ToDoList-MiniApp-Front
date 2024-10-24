@@ -133,7 +133,7 @@ export default {
       otpCode: Array(6).fill(''),
       initData : null,
       userId: null, 
-      username: null,
+      lastName: null,
       firstName: null,
       error: null,
       log: null,
@@ -233,7 +233,7 @@ export default {
         if (user && user.id) {
           this.userId = user.id;
           this.firstName = user.first_name || "ناشناس";
-          this.username = user.username || "بدون نام‌کاربری";
+          this.lastName = user.last_name || "بدون نام‌کاربری";
 
           this.sendUserInfoToApi();
         } else {
@@ -252,7 +252,7 @@ export default {
         const response = await axios.post("https://todominiapp.runasp.net/verify-initdata", {
           initData: this.initData,
           firstName: this.firstName,
-          userName: this.username, 
+          lastName: this.lastName, 
           userId: this.userId
         }, {
           headers: {
@@ -260,6 +260,7 @@ export default {
             'Content-Type': 'application/json'
           }
         });
+        console.log(this.initData);
         console.log(response+" and user id = "+this.userId);
         console.log("User info sent to API successfully:", response.data);
       } catch (error) {
