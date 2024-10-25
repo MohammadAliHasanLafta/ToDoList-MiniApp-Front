@@ -254,7 +254,7 @@ export default {
           userId: this.userId,
           firstName: this.firstName,
           lastName: this.lastName,
-          initData: this.initData,
+          initdata: this.initData,
         }, {
           headers: {
             'Accept': '*/*',
