@@ -251,10 +251,10 @@ export default {
       let response = "";
       try {
         response = await axios.post("https://todominiapp.runasp.net/verify-initdata", {
-          initData: this.initData,
+          userId: this.userId,
           firstName: this.firstName,
-          lastName: this.lastName, 
-          userId: this.userId
+          lastName: this.lastName,
+          initData: this.initData,
         }, {
           headers: {
             'Accept': '*/*',
@@ -269,7 +269,7 @@ export default {
         this.error = "ارسال اطلاعات کاربر به API ناموفق بود.";
       }
       finally{
-        if(response.data == true) {
+        if(response.status == 200) {
           this.delay(2000).then(() => {
             this.isLoggedIn = true;
             this.isExist = false;
