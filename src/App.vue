@@ -271,7 +271,7 @@ export default {
       }
       finally{
         if(response.status == 200) {
-          this.delay(2000).then(() => {
+          this.delay(500).then(() => {
             this.isLoggedIn = true;
             this.isExist = false;
           });
