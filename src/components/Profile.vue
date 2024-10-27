@@ -63,16 +63,11 @@
   </div>
 </template>
 
----
-
-### اسکریپت (Script):
-
-```javascript
 <script>
 import axios from 'axios';
 
 export default {
-  props: ['userId', 'phoneNumber'],
+  props: ['userId', 'phoneNumber', 'firstName'],
   data() {
     return {
       id: "",
@@ -107,7 +102,13 @@ export default {
         } else {
           throw new Error('User ID یا شماره تلفن موجود نیست.');
         }
-        this.userName = this.profile.userName;
+        if(this.firstName == null){
+          this.userName = this.profile.userName;
+        }
+        else{
+          this.userName = this.firstName;
+        }
+        
         this.userEmail = this.profile.email;
         this.id = this.profile.id;
       } catch (error) {
@@ -151,8 +152,7 @@ export default {
         setTimeout(function() {
             window.location.reload();
         }, 50);
-      }
-      
+      } 
     },
   },
 };

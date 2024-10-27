@@ -74,6 +74,7 @@
         <router-view 
           :userId="userId" 
           :phoneNumber="phoneNumber" 
+          :firstName="firstName"
           class="bg-[#ffffffb0] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00] mx-auto">
         </router-view>
 
