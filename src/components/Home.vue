@@ -1,39 +1,14 @@
 <template>
     <div class="bg-[#ffffffb7] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00]">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4" dir="rtl">کارت رو اضافه کن!</h2>
+      <h2 class="text-2xl font-bold text-gray-800 mb-4 space-y-4">لیست کارهای شما</h2>
 
-      <!-- <form @submit.prevent="addTodo" class="mb-4 space-y-4" dir="rtl">
-        <input
-          v-model="newTodoTitle"
-          placeholder="کار جدید..."
-          class="w-full p-3 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F37F00]" />
-        <button
-          type="submit"
-          class="w-full bg-[#FF8100] hover:bg-[#FFA242] text-white font-semibold py-2 px-4 rounded-lg transition-colors">
-          اضافه کردن
-        </button>
-      </form> -->
 
-      <form @submit.prevent="addTodo" class="flex mb-4" dir="rtl">
-        <input
-          v-model="newTodoTitle"
-          placeholder="اضافه کردن کار..."
-          class="flex-grow p-3 border border-gray-300 rounded-r-full focus:outline-none focus:ring-2 focus:ring-blue-500 h-12" />
-        
-        <!-- Circular Plus Button Attached to Input (RTL) -->
-        <button
-          type="submit"
-          class="bg-green-500 hover:bg-green-600 text-white h-12 w-12 flex items-center justify-center shadow-md transition-colors rounded-l-full">
-          <i class="fa-solid fa-plus"></i>
-        </button>
-      </form>
-
-      <!-- <div v-if="todos.length === 0" class="text-center">
+      <div v-if="todos.length === 0" class="text-center mb-4 space-y-4">
         <p dir="rtl">هیچ کاری ثبت نشده است.</p>
       </div>
 
       <div v-else class="overflow-y-auto max-h-40">
-        <ul class="space-y-2" dir="rtl">
+        <ul class="mb-4 space-y-4" dir="rtl">
           <li
             v-for="todo in todos"
             :key="todo.id"
@@ -53,7 +28,7 @@
             </div>
           </li>
         </ul>
-      </div>  -->
+      </div> 
     </div>
 </template>
 
@@ -66,6 +41,8 @@ export default {
     return {
       newTodoTitle: '',
       todos: [],
+    //   phoneNumber: null,
+    //   userId: null, 
     };
   },
   mounted(){

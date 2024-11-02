@@ -69,7 +69,7 @@
         </button>
       </form>
     </div>
-    <div v-else>
+    <!-- <div v-else>
       <div class="flex flex-col">
         <router-view 
           :userId="userId" 
@@ -108,7 +108,68 @@
           </router-link>
         </nav>
       </div>
-    </div>
+    </div> -->
+
+    <div v-else>
+  <div class="flex flex-col">
+    <router-view 
+      :userId="userId" 
+      :phoneNumber="phoneNumber" 
+      :firstName="firstName"
+      class="bg-[#ffffffb0] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00] mx-auto">
+    </router-view>
+
+    <nav 
+      class="fixed bottom-0 right-0 w-full bg-white shadow-lg flex justify-around items-center py-4 text-gray-600 border-t border-gray-200">
+
+      <router-link
+        to="/"
+        class="flex flex-col items-center text-center text-sm"
+        active-class="text-[#FF8100]"
+      > 
+        <i class="fa-solid fa-house text-2xl"></i>
+      </router-link>
+      
+      <router-link
+        to="/search"
+        class="flex flex-col items-center text-center text-sm"
+        active-class="text-[#FF8100]"
+      > 
+        <i class="fa-solid fa-magnifying-glass text-2xl"></i>
+      </router-link>
+
+      <!-- Center Floating Action Button (Plus Icon) -->
+      <router-link
+        to="/todolist"
+        class="bg-[#FF8100] rounded-full p-4 text-white flex items-center justify-center shadow-lg border-4 border-white 
+        absolute bottom-8 left-1/2 transform -translate-x-1/2 w-16 h-16">
+        <i class="fa-solid fa-plus text-2xl"></i>
+      </router-link>
+
+      <!-- Calendar Icon -->
+      <router-link
+        to="/calendar"
+        class="flex flex-col items-center text-center text-sm"
+        active-class="text-[#FF8100]"
+      > 
+        <i class="fa-solid fa-calendar text-2xl"></i>
+      </router-link>
+
+      <!-- Profile Icon -->
+      <router-link
+        to="/profile"
+        class="flex flex-col items-center text-center text-sm"
+        active-class="text-[#FF8100]"
+      > 
+        <i class="fa-solid fa-user text-2xl"></i>
+      </router-link>
+
+    </nav>
+  </div>
+</div>
+
+
+
     
   </div>
 </template>
@@ -271,10 +332,8 @@ export default {
       }
       finally{
         if(response.status == 200) {
-          this.delay(500).then(() => {
             this.isLoggedIn = true;
             this.isExist = false;
-          });
         }
       }
       
@@ -298,9 +357,7 @@ export default {
       this.error = "احراز هویت ناموفق بود.";
     }
     finally{
-      this.delay(4000).then(() => {
         this.isLoggedIn = true;
-      });
     }
   },
   },

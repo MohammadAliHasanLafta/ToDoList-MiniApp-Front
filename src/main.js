@@ -6,13 +6,15 @@ import { createRouter, createWebHistory } from 'vue-router';
 import TodoList from '../src/components/ToDoList.vue';
 import Profile from '../src/components/Profile.vue';
 import OTPSetting from '../src/components/OTPSetting.vue';
+import Home from '../src/components/Home.vue';
 
 
 const routes = [
   { path: '/app', component: App },
-  { path: '/', component: TodoList },
+  { path: '/todolist', component: TodoList },
   { path: '/profile', component: Profile },
   { path: '/otpsetting', component: OTPSetting },
+  { path: '/', component: Home },
 ];
 
 const router = createRouter({
