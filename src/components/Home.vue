@@ -36,7 +36,7 @@
 import axios from 'axios';
 
 export default {
-    props: ['userId', 'phoneNumber'],
+  props: ['userId', 'phoneNumber', 'todos'],
   data() {
     return {
       newTodoTitle: '',
@@ -48,8 +48,17 @@ export default {
   mounted(){
     this.loadTodos();
   },
+  watch: {
+    todos: {
+      handler(newTodos) {
+        this.loadTodos(newTodos);
+      },
+      immediate: true,
+      deep: true
+    }
+  },
   methods: {
-  async loadTodos() {
+  async loadTodos(todos) {
       try {
         let response = null;
 
@@ -67,11 +76,12 @@ export default {
           throw new Error('User ID یا شماره تلفن موجود نیست.');
         }
 
-        this.todos = response.data;
+        todos = response.data;
       } catch (error) {
         console.error('مشکل در دریافت لیست کارها:', error);
         this.error = 'خطا در دریافت لیست کارها';
       }
+      this.todos = todos;
     },
     async addTodo() {
       if (this.newTodoTitle.trim() !== '') {
