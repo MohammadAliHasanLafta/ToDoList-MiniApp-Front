@@ -1,186 +1,13 @@
-
-<!-- <template>
-  <div id="app" class="background-container min-h-screen bg-gradient-to-center from-[#FFAB49] to-[#F5811E] flex items-center justify-center p-4">
-    <div v-if="!isLoggedIn && !showOtp" class="bg-[#ffffffb0] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00]">
-
-      <h1 class="text-2xl font-bold text-[#FF7B0E] mb-2" dir="rtl">در حال دریافت داده ها،</h1>
-      <h1 class="text-1xl font-bold text-[#FF7B0E] mb-10" dir="rtl">لطفاً شکیبا باشید!🙏</h1>
-
-      <div class="text-center">
-        <div role="status">
-          <svg
-            aria-hidden="true"
-            class="inline w-8 h-8 text-[#fba446bc] animate-spin dark:text-[#F37F00] fill-[#F37F00]"
-            viewBox="0 0 100 101"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-              fill="currentColor" />
-            <path
-              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-              fill="currentFill" />
-          </svg>
-          <span class="sr-only">Loading...</span>
-        </div>
-      </div>
-    </div>
-
-    <div v-else-if="showOtp" class="bg-[#ffffffb0] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00]">
-      <h2 class="text-2xl font-bold mb-4" dir="rtl">ورود</h2>
-      <form v-if="!otpSent" @submit.prevent="requestOtp" class="mb-4 space-y-4">
-        <input v-model="phoneNumber" placeholder="شماره موبایل..." class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F37F00]" required  dir="rtl"/>
-        <button v-if="!click" type="submit" class="w-full bg-[#FF8100] hover:bg-[#FFA242] text-white py-2 px-4 rounded-lg">درخواست کد</button>
-        <div v-else class="text-center">
-        <div role="status">
-          <svg
-            aria-hidden="true"
-            class="inline w-8 h-8 text-[#fba446bc] animate-spin dark:text-[#F37F00] fill-[#F37F00]"
-            viewBox="0 0 100 101"
-            fill="none"
-            xmlns="http://www.w3.org/2000/svg">
-            <path
-              d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z"
-              fill="currentColor" />
-            <path
-              d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z"
-              fill="currentFill" />
-          </svg>
-          <span class="sr-only">Loading...</span>
-        </div>
-      </div>
-      </form>
-
-      <form v-else @submit.prevent="verifyOtp" class="space-y-4">
-        <h2 class="text-0xl font-bold mb-0" dir="rtl">کد ارسال شده به {{ phoneNumber }} را وارد نمایید.</h2>
-        <button @click="editPhoneNumber" class="text-sm text-blue-500 hover:underline">
-            ویرایش شماره
-        </button>
-        <div class="flex justify-between space-x-2">
-          <input v-for="(digit, index) in otpCode" :key="index" type="number" maxlength="1"
-            v-model="otpCode[index]" 
-            @input="moveToNext($event, index)" 
-            @keydown.backspace="moveToPrev($event, index)"
-            class="w-10 h-10 sm:w-12 sm:h-12 flex-shrink-0 text-center border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-green-500 text-lg" />
-        </div>
-        <button @click="verifyOtp" 
-          class="w-full bg-green-500 hover:bg-green-600 text-white font-semibold py-2 px-3 rounded-lg transition-colors">
-          ثبت کد
-        </button>
-      </form>
-    </div> -->
-    <!-- <div v-else>
-      <div class="flex flex-col">
-        <router-view 
-          :userId="userId" 
-          :phoneNumber="phoneNumber" 
-          :firstName="firstName"
-          class="bg-[#ffffffb0] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00] mx-auto">
-        </router-view>
-
-        <nav 
-          class="fixed bottom-0 right-0 w-full bg-[#ffffff00] text-[#285653] flex justify-around md:bottom-auto md:right-0 md:top-0 md:h-full md:w-48 md:flex-col md:justify-start" dir="rtl">
-          <router-link
-            to="/profile"
-            class="flex flex-col items-center text-center text-base md:flex-row md:gap-2 md:px-4 py-2"
-            active-class="text-[#e06411]"
-          > 
-            <i class="fa-solid fa-address-card text-xl"></i>
-            <span>پروفایل</span>
-          </router-link>
-
-          <router-link
-            to="/"
-            class="flex flex-col items-center text-center text-base md:flex-row md:gap-2 md:px-4 py-2"
-            active-class="text-[#e06411]"
-          > 
-            <i class="fa-solid fa-rectangle-list text-xl"></i>
-            <span>کارها</span>
-          </router-link>
-
-          <router-link
-            to="/otpsetting"
-            class="flex flex-col items-center text-center text-base md:flex-row md:gap-2 md:px-4 py-2"
-            active-class="text-[#e06411]"
-          > 
-            <i class="fa-solid fa-question text-xl"></i>
-            <span>راهنما</span>
-          </router-link>
-        </nav>
-      </div>
-    </div> -->
-    <!-- class="bg-[#ffffffb0] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00] mx-auto" -->
-    <!-- <div v-else>
-  <div class="flex flex-col">
-    <router-view 
-      :userId="userId" 
-      :phoneNumber="phoneNumber" 
-      :firstName="firstName"
-      >
-    </router-view>
-
-    <nav 
-      class="fixed bottom-0 right-0 w-full bg-white shadow-lg flex justify-around items-center py-4 text-gray-600 border-t border-gray-200">
-
-      <router-link
-        to="/"
-        class="flex flex-col items-center text-center text-sm"
-        active-class="text-[#FF8100]"
-      > 
-        <i class="fa-solid fa-house text-2xl"></i>
-      </router-link>
-      
-      <router-link
-        to="/search"
-        class="flex flex-col items-center text-center text-sm"
-        active-class="text-[#FF8100]"
-      > 
-        <i class="fa-solid fa-magnifying-glass text-2xl"></i>
-      </router-link>
-
-      <router-link
-        to="/todolist"
-        class="bg-[#FF8100] rounded-full p-4 text-white flex items-center justify-center shadow-lg border-4 border-white 
-        absolute bottom-8 left-1/2 transform -translate-x-1/2 w-16 h-16">
-        <i class="fa-solid fa-plus text-2xl"></i>
-      </router-link>
-
-      <router-link
-        to="/calendar"
-        class="flex flex-col items-center text-center text-sm"
-        active-class="text-[#FF8100]"
-      > 
-        <i class="fa-solid fa-calendar text-2xl"></i>
-      </router-link>
-
-      <router-link
-        to="/profile"
-        class="flex flex-col items-center text-center text-sm"
-        active-class="text-[#FF8100]"
-      > 
-        <i class="fa-solid fa-user text-2xl"></i>
-      </router-link>
-
-    </nav>
-  </div>
-</div>
-
-
-
-    
-  </div>
-</template> -->
-
 <template>
   <div id="app" class="background-container min-h-screen bg-gradient-to-center from-[#FFAB49] to-[#F5811E] flex items-center justify-center p-4">
-    <!-- Main Content with Conditional OTP and Loading Screens -->
+
     <div v-if="!isLoggedIn && !showOtp" class="bg-[#ffffffb0] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00]">
-      <!-- Loading Screen -->
+
       <h1 class="text-2xl font-bold text-[#FF7B0E] mb-2" dir="rtl">در حال دریافت داده ها،</h1>
       <h1 class="text-1xl font-bold text-[#FF7B0E] mb-10" dir="rtl">لطفاً شکیبا باشید!🙏</h1>
       <div class="text-center">
         <div role="status">
-          <!-- Loading Spinner -->
+
           <svg aria-hidden="true" class="inline w-8 h-8 text-[#fba446bc] animate-spin dark:text-[#F37F00] fill-[#F37F00]" viewBox="0 0 100 101" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M100 50.5908C100 78.2051 77.6142 100.591 50 100.591C22.3858 100.591 0 78.2051 0 50.5908C0 22.9766 22.3858 0.59082 50 0.59082C77.6142 0.59082 100 22.9766 100 50.5908ZM9.08144 50.5908C9.08144 73.1895 27.4013 91.5094 50 91.5094C72.5987 91.5094 90.9186 73.1895 90.9186 50.5908C90.9186 27.9921 72.5987 9.67226 50 9.67226C27.4013 9.67226 9.08144 27.9921 9.08144 50.5908Z" fill="currentColor" />
             <path d="M93.9676 39.0409C96.393 38.4038 97.8624 35.9116 97.0079 33.5539C95.2932 28.8227 92.871 24.3692 89.8167 20.348C85.8452 15.1192 80.8826 10.7238 75.2124 7.41289C69.5422 4.10194 63.2754 1.94025 56.7698 1.05124C51.7666 0.367541 46.6976 0.446843 41.7345 1.27873C39.2613 1.69328 37.813 4.19778 38.4501 6.62326C39.0873 9.04874 41.5694 10.4717 44.0505 10.1071C47.8511 9.54855 51.7191 9.52689 55.5402 10.0491C60.8642 10.7766 65.9928 12.5457 70.6331 15.2552C75.2735 17.9648 79.3347 21.5619 82.5849 25.841C84.9175 28.9121 86.7997 32.2913 88.1811 35.8758C89.083 38.2158 91.5421 39.6781 93.9676 39.0409Z" fill="currentFill" />
@@ -190,7 +17,7 @@
       </div>
     </div>
 
-    <!-- OTP Form -->
+
     <div v-else-if="showOtp" class="bg-[#ffffffb0] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00]">
       <h2 class="text-2xl font-bold mb-4" dir="rtl">ورود</h2>
       <form v-if="!otpSent" @submit.prevent="requestOtp" class="mb-4 space-y-4">
@@ -330,6 +157,7 @@ export default {
   },
   data() {
     return {
+      hasPhone: false,
       click: false,
       isLoading: false,
       isLoggedIn: false,
@@ -371,8 +199,68 @@ export default {
     } else {
       this.showOtp = true;  
     }
+
+    await this.checkAndRequestContact();
   },
   methods: {
+    async sendMessengerPhone(contact) {
+      try {
+        const decodedData = decodeURIComponent(contact.response);
+        const params = new URLSearchParams(decodedData);
+        const contactJson = params.get("contact");
+
+        if (contactJson) {
+          const contactData = JSON.parse(contactJson);
+          const phone = contactData.phone.replace("98", "0", 1);
+
+          // const response = await this.fetchData(
+          //   `${process.env.mainURL}/account/add-mobile?mobile=${phone}`,
+          //   {
+          //     method: "POST",
+          //   }
+          // );
+
+          console.log(phone);
+          if (phone != null) {
+            sessionStorage.setItem("isPhoneShared", "true");
+            console.log("Phone successfully shared.");
+          } else {
+            sessionStorage.setItem("isPhoneShared", "false");
+            console.log("Error:", response.error);
+          }
+        }
+      } catch (error) {
+        console.error("Error processing contact data:", error);
+      }
+    },
+
+    // Step 2: Request phone contact from the user if not available
+    async checkAndRequestContact() {
+      const et = window.Eitaa.WebApp;
+
+      if (!this.hasPhone) {
+        et.requestContact((isShared) => {
+          if (!isShared) {
+            sessionStorage.setItem("isPhoneShared", "false");
+          }
+        });
+
+        et.onEvent("contactRequested", (contact) => {
+          this.sendMessengerPhone(contact);
+        });
+      }
+    },
+
+    // Additional utility to make HTTP requests
+    // async fetchData(url, options) {
+    //   try {
+    //     const response = await fetch(url, options);
+    //     return response.json();
+    //   } catch (error) {
+    //     console.error("Failed to fetch data:", error);
+    //     return { success: false, error };
+    //   }
+    // },
     openDrawer() {
       this.isDrawerOpen = true;
       this.isAnimating = true;

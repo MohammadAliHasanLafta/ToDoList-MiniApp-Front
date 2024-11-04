@@ -1,12 +1,11 @@
-<template>
-  <div class="h-screen w-screen flex justify-center items-center bg-[#ffffff9f]">
+<template >
+  <div @click.self="closeMenu" class="h-screen w-screen flex justify-center items-center bg-[#ffffff9f]">
     <div class="p-6 max-w-md mx-4">
       <div class="text-center mb-6">
         <h2 class="font-semibold text-2xl text-gray-800 mt-2"></h2>
         <button @click="toggleMenu" class="absolute top-4 right-4">
           <i class="fa-solid fa-ellipsis-vertical text-gray-400"></i>
         </button>
-        
         <div
           v-if="isMenuOpen"
           class="absolute top-12 right-4 bg-white border border-gray-200 shadow-lg rounded-lg w-40 z-10">
@@ -142,6 +141,9 @@ export default {
     },
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen;
+    },
+    closeMenu() {
+      this.isMenuOpen = false;
     },
     async getProfile() {
       try {

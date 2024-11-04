@@ -1,5 +1,5 @@
 <template>
-    <div class="bg-[#ffffffb7] p-8 rounded-xl shadow-lg w-full max-w-md text-center border-solid border-2 border-[#F37F00]">
+    <div class="bg-[#ffffffb7] p-8 rounded-xl shadow-lg w-full max-w-md text-center">
       <h2 class="text-2xl font-bold text-gray-800 mb-4 space-y-4">لیست کارهای شما</h2>
 
 
