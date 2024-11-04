@@ -205,8 +205,9 @@ export default {
   methods: {
     async sendMessengerPhone(contact) {
       try {
-        console.log(contact);
+        console.log("reponse : "+contact.response);
         const decodedData = decodeURIComponent(contact.response);
+        console.log("decodedData : "+decodedData);
         const params = new URLSearchParams(decodedData);
         const contactJson = params.get("contact");
 
