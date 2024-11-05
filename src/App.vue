@@ -442,7 +442,7 @@ export default {
             'Content-Type': 'application/json'
           }
         });
-        console.log(this.initData);
+        console.log(this.initData+"llllllllllllllll");
         console.log(response+" and user id = "+this.userId);
         console.log("User info sent to API successfully:", response.data);
       } catch (error) {
