@@ -94,7 +94,6 @@ export default {
       profile: null,
       userName: "",
       userEmail: "",
-      mobile: "",
       showEditModal: false, 
       taskdone: 0,
       pendingtask: 0,
