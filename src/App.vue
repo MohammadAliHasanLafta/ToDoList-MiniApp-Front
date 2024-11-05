@@ -168,9 +168,11 @@ export default {
       phoneNumber: null,
       otpCode: Array(6).fill(''),
       initData : null,
+      contactRequest: null,
       userId: null, 
       lastName: null,
       firstName: null,
+      mobile: null,
       error: null,
       log: null,
       isDrawerOpen: false,
@@ -213,17 +215,12 @@ export default {
 
         if (contactJson) {
           const contactData = JSON.parse(contactJson);
-          const phone = contactData.phone.replace("98", "0", 1);
+          this.mobile = contactData.phone.replace("98", "0", 1);
 
-          // const response = await this.fetchData(
-          //   `${process.env.mainURL}/account/add-mobile?mobile=${phone}`,
-          //   {
-          //     method: "POST",
-          //   }
-          // );
+          this.verifyContact();
 
-          console.log(phone);
-          if (phone != null) {
+          console.log(this.mobile);
+          if (this.mobile != null) {
             sessionStorage.setItem("isPhoneShared", "true");
             console.log("Phone successfully shared.");
           } else {
@@ -236,33 +233,54 @@ export default {
       }
     },
 
-    // Step 2: Request phone contact from the user if not available
     async checkAndRequestContact() {
       const et = window.Eitaa.WebApp;
 
-      if (!this.hasPhone) {
-        et.requestContact((isShared) => {
-          if (!isShared) {
-            sessionStorage.setItem("isPhoneShared", "false");
+      try {
+        const response = await axios.get(`https://todominiapp.runasp.net/get-miniappuser-mobile?UserId=${this.userId}`, {
+          headers: {
+            'accept': '*/*'
+          }
+        });
+        if (response.data) {
+          this.mobile = response.data;
+          
+        } else {
+          et.requestContact((isShared) => {
+            if (!isShared) {
+              sessionStorage.setItem("isPhoneShared", "false");
+            }
+          });
+
+          et.onEvent("contactRequested", (contact) => {
+            this.sendMessengerPhone(contact);
+          });
+        }
+      } catch (error) {
+        console.error("Error checking user phone:", error);
+      }
+    },
+    
+
+    async verifyContact() {
+      try {
+        const response = await axios.post('https://todominiapp.runasp.net/verify-contact', {
+          userId: this.userId,
+          mobile: this.mobile,
+          contactRequest: this.contactRequest
+        }, {
+          headers: {
+            'accept': '*/*',
+            'Content-Type': 'application/json'
           }
         });
 
-        et.onEvent("contactRequested", (contact) => {
-          this.sendMessengerPhone(contact);
-        });
+        console.log(response.data);
+      } catch (error) {
+        console.error('Error:', error);
       }
     },
 
-    // Additional utility to make HTTP requests
-    // async fetchData(url, options) {
-    //   try {
-    //     const response = await fetch(url, options);
-    //     return response.json();
-    //   } catch (error) {
-    //     console.error("Failed to fetch data:", error);
-    //     return { success: false, error };
-    //   }
-    // },
     openDrawer() {
       this.isDrawerOpen = true;
       this.isAnimating = true;
