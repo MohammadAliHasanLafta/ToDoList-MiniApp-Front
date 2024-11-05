@@ -216,6 +216,7 @@ export default {
         if (contactJson) {
           const contactData = JSON.parse(contactJson);
           this.mobile = contactData.phone.replace("98", "0", 1);
+          this.contactRequest = decodedData;
 
           this.verifyContact();
 
