@@ -247,7 +247,7 @@ export default {
           }
         });
         console.log("response : "+ error.response.status);
-        if (error.response.status == 401) {
+        if (response.data == false) {
           et.requestContact((isShared) => {
             if (!isShared) {
               sessionStorage.setItem("isPhoneShared", "false");
