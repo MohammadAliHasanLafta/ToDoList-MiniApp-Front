@@ -23,7 +23,8 @@
       <div class="text-center mb-6">
         <img src="../assets/profile.png" alt="Profile Picture" class="w-20 h-20 rounded-full mx-auto border-4 border-[#F37F00] shadow-md object-cover" />
         <h2 class="text-lg font-semibold text-gray-800 mt-4">{{ userName }}</h2>
-        <p class="text-sm text-gray-500">{{ userEmail }}</p>
+        <p class="text-gray-500 text-base">{{ mobile }}</p>
+        <p class="text-gray-500 text-sm">{{ userEmail }}</p>
       </div>
 
 
@@ -93,6 +94,7 @@ export default {
       profile: null,
       userName: "",
       userEmail: "",
+      mobile: "",
       showEditModal: false, 
       taskdone: 0,
       pendingtask: 0,
@@ -182,6 +184,36 @@ export default {
 
 
     },
+
+    async getMobile() {
+      const et = window.Eitaa.WebApp;
+
+      try {
+        const response = await axios.get(`https://todominiapp.runasp.net/get-miniappuser-mobile?UserId=${this.userId}`, {
+          headers: {
+            'accept': '*/*'
+          }
+        });
+        if (response.status == 200) {
+          this.mobile = response.data;
+          console.log("mobile : "+this.mobile);
+          
+        } else {
+          et.requestContact((isShared) => {
+            if (!isShared) {
+              sessionStorage.setItem("isPhoneShared", "false");
+            }
+          });
+
+          et.onEvent("contactRequested", (contact) => {
+            this.sendMessengerPhone(contact);
+          });
+        }
+      } catch (error) {
+        console.error("Error checking user phone:", error);
+      }
+    },
+
     async updateProfile() {
       this.isMenuOpen = false;
       try {

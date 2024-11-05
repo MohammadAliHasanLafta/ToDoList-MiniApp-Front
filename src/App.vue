@@ -242,7 +242,7 @@ export default {
             'accept': '*/*'
           }
         });
-        if (response.data) {
+        if (response.status == 200) {
           this.mobile = response.data;
           console.log("mobile : "+this.mobile);
           
