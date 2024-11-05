@@ -68,7 +68,8 @@
       :userId="userId" 
       :phoneNumber="phoneNumber" 
       :firstName="firstName" 
-      :todos="todos"/>
+      :todos="todos"
+      :mobile="mobile"/>
 
       <nav class="fixed bottom-0 right-0 w-full bg-white shadow-lg flex justify-around items-center py-4 text-gray-600 border-t border-gray-200">
         <router-link to="/" class="flex flex-col items-center text-center text-sm" active-class="text-[#FF8100]">

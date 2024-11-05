@@ -86,7 +86,7 @@
 import axios from 'axios';
 
 export default {
-  props: ['userId', 'phoneNumber', 'firstName', 'todos'],
+  props: ['userId', 'phoneNumber', 'firstName', 'todos', 'mobile'],
   data() {
     return {
       isMenuOpen: false,
@@ -102,7 +102,6 @@ export default {
   },
   mounted(){
     this.getProfile();
-    this.getMobile()
     this.calculateTodos();
   },
   watch: {
@@ -184,35 +183,6 @@ export default {
       }
 
 
-    },
-
-    async getMobile() {
-      const et = window.Eitaa.WebApp;
-
-      try {
-        const response = await axios.get(`https://todominiapp.runasp.net/get-miniappuser-mobile?UserId=${this.userId}`, {
-          headers: {
-            'Accept': 'text/plain'
-          }
-        });
-        if (error.response.status == 200) {
-          et.requestContact((isShared) => {
-            if (!isShared) {
-              sessionStorage.setItem("isPhoneShared", "false");
-            }
-          });
-
-          et.onEvent("contactRequested", (contact) => {
-            this.sendMessengerPhone(contact);
-          });
-          
-        } else {
-          this.mobile = response.data;
-          console.log("mobile : "+this.mobile);
-        }
-      } catch (error) {
-        console.error("Error checking user phone:", error);
-      }
     },
 
     async updateProfile() {
