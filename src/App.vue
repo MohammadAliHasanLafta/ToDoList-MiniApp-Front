@@ -203,7 +203,7 @@ export default {
       this.showOtp = true;  
     }
 
-    await this.checkAndRequestContact();
+    this.checkAndRequestContact();
   },
   methods: {
     async sendMessengerPhone(contact) {
