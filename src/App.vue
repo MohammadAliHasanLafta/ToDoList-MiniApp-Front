@@ -482,6 +482,18 @@ export default {
 </script>
 
 <style>
+@font-face {
+  font-family: 'Sahel';
+  src: url('../src/assets/font/Sahel-Black.woff') format('woff'),
+       url('../src/assets/font/Sahel-Black.ttf') format('truetype');
+  font-weight: lighter;
+  font-style:unset;
+}
+
+* {
+  font-family: 'Sahel', sans-serif;
+}
+
 .line-through {
   text-decoration: line-through;
 }

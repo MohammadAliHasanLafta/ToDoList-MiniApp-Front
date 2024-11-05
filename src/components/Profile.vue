@@ -13,6 +13,10 @@
             <i class="fa-solid fa-pen"></i>
             ویرایش پروفایل
           </button>
+          <button @click="signOut" class="w-full text-center text-yellow-500 px-4 py-2 hover:bg-gray-100">
+            <i class="fa-solid fa-gear"></i>
+            تنظیمات
+          </button>
           <button @click="signOut" class="w-full text-center text-red-700 px-4 py-2 hover:bg-gray-100">
             <i class="fa-solid fa-right-from-bracket"></i>
             خروج از حساب
@@ -27,19 +31,42 @@
         <p class="text-gray-500 text-sm">{{ userEmail }}</p>
       </div>
 
-
       <div class="bg-gray-100 rounded-lg py-4 px-4 mb-6 shadow-sm">
         <div class="text-center mb-3">
           <h3 class="text-lg font-semibold text-gray-700">وضعیت کارها</h3>
         </div>
         <div class="flex justify-between items-center">
           <div class="text-center">
-            <span class="text-lg font-bold text-[#FF5C5C]">{{ pendingtask }}</span>
-            <p class="text-xs text-gray-600">انجام نشده</p>
+            <span
+              class="text-lg font-bold text-[#FF5C5C]"
+              @click="showTasks('pending')"
+            >
+              {{ pendingtask }}
+            </span>
+            <p @click="showTasks('pending')" class="text-xs text-gray-600">انجام نشده</p>
           </div>
           <div class="text-center pl-10">
-            <span class="text-base font-bold text-[#5A8DEE]">{{ taskdone }}</span>
-            <p class="text-xs text-gray-600">انجام شده</p>
+            <span
+              class="text-base font-bold text-[#5A8DEE]"
+              @click="showTasks('done')"
+            >
+              {{ taskdone }}
+            </span>
+            <p @click="showTasks('done')" class="text-xs text-gray-600">انجام شده</p>
+          </div>
+        </div>
+
+        <div v-if="isModalVisible" class="modal" dir="rtl">
+          <div class="modal-content">
+            <div class="modal-header">
+              <h4>{{ modalTitle }}</h4>
+              <span class="close" @click="closeModal">&times;</span>
+            </div>
+            <div class="modal-body" dir="rtl">
+              <ul>
+                <li v-for="task in modalTasks" :key="task.id">{{ task.context }}</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>
@@ -97,6 +124,11 @@ export default {
       showEditModal: false, 
       taskdone: 0,
       pendingtask: 0,
+      donetask: [],
+      undonetask: [],
+      isModalVisible: false,
+      modalTitle: '',
+      modalTasks: [],
     };
   },
   mounted(){
@@ -133,12 +165,29 @@ export default {
 
         todos = response.data;
         this.taskdone = todos.filter(todo => todo.isComplete).length;
-        this.pendingtask = todos.filter(todo => todo.isComplete == false).length;
+        this.pendingtask = todos.filter(todo => !todo.isComplete).length;
+
+        this.donetask = todos.filter(todo => todo.isComplete);
+        this.undonetask = todos.filter(todo => !todo.isComplete);
       } catch (error) {
         console.error('مشکل در دریافت لیست کارها:', error);
         this.error = 'خطا در دریافت لیست کارها';
       }
 
+    },
+    showTasks(status) {
+      this.isModalVisible = true;
+      if (status === 'done') {
+        this.modalTitle = 'کار های انجام شده';
+        this.modalTasks = this.donetask;
+      } else if (status === 'pending') {
+        this.modalTitle = 'کار های انجام نشده';
+        this.modalTasks = this.undonetask;
+      }
+    },
+
+    closeModal() {
+      this.isModalVisible = false;
     },
     toggleMenu() {
       this.isMenuOpen = !this.isMenuOpen;
@@ -307,6 +356,109 @@ input:checked + .slider:before {
 .hover\:bg-gray-100:hover {
   background-color: #f3f4f6;
 }
+
+.modal {
+  display: flex;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.7); /* پس‌زمینه تیره‌تر */
+  align-items: center;
+  justify-content: center;
+}
+
+.modal-content {
+  background-color: #ffffff;
+  padding: 30px 40px;
+  border-radius: 12px;
+  width: 90%;
+  max-width: 500px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  font-family: Arial, sans-serif;
+  color: #333;
+  animation: fadeIn 0.3s ease-in-out;
+  direction: rtl; /* تنظیم جهت به RTL برای متن راست‌چین */
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 15px;
+  position: relative;
+}
+
+.modal-header h4 {
+  margin: 0;
+  font-size: 1.25rem;
+  font-weight: 600;
+  color: #5d91f3;
+  text-align: center;
+}
+
+.close {
+  position: absolute;
+  right: 0; /* قرار دادن آیکون بستن در سمت راست */
+  color: #aaa;
+  font-size: 24px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: color 0.3s ease;
+}
+
+.close:hover,
+.close:focus {
+  color: #FF5C5C; /* رنگ قرمز برای آیکون بستن در حالت هاور */
+}
+
+.modal-body {
+  font-size: 1rem;
+  color: #666;
+  text-align: right; /* تراز راست برای متن تسک‌ها */
+}
+
+.modal-body ul {
+  list-style-type: decimal; /* نمایش لیست به صورت شماره‌دار */
+  list-style-position: inside; /* نمایش اعداد داخل لیست */
+  padding: 0;
+  margin: 0;
+  max-height: 200px; /* حداکثر ارتفاع لیست برای افزودن اسکرول‌بار */
+  overflow-y: auto; /* فعال کردن اسکرول عمودی زمانی که لیست بلند باشد */
+}
+
+.modal-body ul li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  text-align: right; /* راست‌چین کردن تسک‌ها */
+}
+
+.modal-body ul li:last-child {
+  border-bottom: none;
+}
+
+/* شخصی‌سازی اسکرول‌بار برای مرورگرهای WebKit (مثل Chrome و Safari) */
+.modal-body ul::-webkit-scrollbar {
+  width: 6px; /* عرض اسکرول‌بار */
+}
+
+.modal-body ul::-webkit-scrollbar-thumb {
+  background-color: #F37F00; /* رنگ اسکرول‌بار */
+  border-radius: 10px; /* گرد کردن لبه‌های اسکرول‌بار */
+}
+
+.modal-body ul::-webkit-scrollbar-track {
+  background-color: #f1f1f1; /* رنگ پس‌زمینه اسکرول‌بار */
+}
+
+
 </style>
 
 

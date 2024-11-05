@@ -1,35 +1,43 @@
 <template>
-    <div class="bg-[#ffffffb7] p-8 rounded-xl shadow-lg w-full max-w-md text-center">
-      <h2 class="text-2xl font-bold text-gray-800 mb-4 space-y-4">لیست کارهای شما</h2>
+  <div @click.self="closeMenu" class="h-screen w-screen flex justify-center items-center bg-[#ffffff9f]">
+    <div class=" p-6  w-full max-w-md mx-auto mt-12 text-center">
+      <h2 class="text-2xl font-bold text-gray-800 mb-6">لیست کارهای شما</h2>
 
-
-      <div v-if="todos.length === 0" class="text-center mb-4 space-y-4">
-        <p dir="rtl">هیچ کاری ثبت نشده است.</p>
+      <div v-if="todos.length === 0" class="text-center mb-4 text-gray-500">
+        <p>هیچ کاری ثبت نشده است.</p>
       </div>
 
-      <div v-else class="overflow-y-auto max-h-40">
-        <ul class="mb-4 space-y-4" dir="rtl">
+      <div v-else class="overflow-y-auto max-h-64">
+        <ul class="space-y-3" dir="rtl">
           <li
             v-for="todo in todos"
             :key="todo.id"
-            class="flex justify-between items-center bg-gray-100 p-2 rounded-lg">
-            <span :class="{ 'line-through': todo.isComplete }">{{ todo.context }}</span>
+            class="flex justify-between items-center bg-gray-50 p-2 rounded-lg shadow-sm hover:bg-gray-100 transition">
+            
+            <span 
+              :class="{ 'line-through text-gray-400': todo.isComplete }" 
+              class="flex-1 text-right text-lg font-medium text-gray-700 pr-2">
+              {{ todo.context }}
+            </span>
+            
             <div class="flex space-x-2">
               <button
                 @click="updateTodo(todo)"
-              class="bg-green-500  hover:bg-green-400 text-white py-1 px-2 rounded-lg ml-2">
-                {{ todo.isComplete ? 'لغو' : 'انجام شد' }}
+                class="text-blue-500 p-2">
+                <i :class="todo.isComplete ? 'fas fa-undo' : 'fas fa-check'"></i>
               </button>
+
               <button
                 @click="deleteTodo(todo.id)"
-                class="bg-red-600 hover:bg-red-500 text-white py-1 px-2 rounded-lg">
-                حذف
+                class="text-red-500 p-2">
+                <i class="fas fa-trash-alt"></i>
               </button>
             </div>
           </li>
         </ul>
       </div> 
     </div>
+  </div>
 </template>
 
 <script>
