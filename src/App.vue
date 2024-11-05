@@ -244,6 +244,7 @@ export default {
         });
         if (response.data) {
           this.mobile = response.data;
+          console.log("mobile : "+this.mobile);
           
         } else {
           et.requestContact((isShared) => {
