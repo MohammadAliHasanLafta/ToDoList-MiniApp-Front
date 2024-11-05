@@ -212,7 +212,7 @@ export default {
 
         this.contactRequest = decodedData;
         console.log("decodedData : "+decodedData);
-        
+
         const params = new URLSearchParams(decodedData);
         const contactJson = params.get("contact");
 
@@ -273,12 +273,8 @@ export default {
           userId: this.userId,
           mobile: this.mobile,
           contactRequest: this.contactRequest
-        }, {
-          headers: {
-            'accept': '*/*',
-            'Content-Type': 'application/json'
-          }
-        });
+        }, { headers: { 'Content-Type': 'application/json' } }
+        );
 
         console.log(response.data);
       } catch (error) {

@@ -192,7 +192,7 @@ export default {
       try {
         const response = await axios.get(`https://todominiapp.runasp.net/get-miniappuser-mobile?UserId=${this.userId}`, {
           headers: {
-            'accept': '*/*'
+            'Accept': 'text/plain'
           }
         });
         if (error.response.status == 200) {
