@@ -246,7 +246,6 @@ export default {
             'accept': '*/*'
           }
         });
-        console.log("response : "+ error.response.status);
         if (response.data == false) {
           et.requestContact((isShared) => {
             if (!isShared) {
