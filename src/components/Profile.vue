@@ -102,6 +102,7 @@ export default {
   },
   mounted(){
     this.getProfile();
+    this.getMobile()
     this.calculateTodos();
   },
   watch: {
