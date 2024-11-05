@@ -246,8 +246,8 @@ export default {
             'accept': '*/*'
           }
         });
-        console.log("response : "+ response.status);
-        if (error.response.status === 401) {
+        console.log("response : "+ error.response.status);
+        if (error.response.status == 401) {
           et.requestContact((isShared) => {
             if (!isShared) {
               sessionStorage.setItem("isPhoneShared", "false");
@@ -442,7 +442,6 @@ export default {
             'Content-Type': 'application/json'
           }
         });
-        console.log(this.initData+"llllllllllllllll");
         console.log(response+" and user id = "+this.userId);
         console.log("User info sent to API successfully:", response.data);
       } catch (error) {
