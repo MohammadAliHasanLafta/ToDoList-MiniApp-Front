@@ -173,8 +173,13 @@ export default {
         else{
           this.userName = this.firstName;
         }
-        
-        this.userEmail = this.profile.email;
+
+        if (this.profile.email === "example@gmail.com") {
+          this.userEmail = "";
+        }
+        else {
+          this.userEmail = this.profile.email;
+        }
         this.id = this.profile.id;
       } catch (error) {
         console.error('مشکل در دریافت لیست کارها:', error);
