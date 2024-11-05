@@ -174,7 +174,7 @@ export default {
           this.userName = this.firstName;
         }
 
-        if (this.profile.email === "example@gmail.com") {
+        if (this.profile.email == "example@gmail.com") {
           this.userEmail = "";
         }
         else {
