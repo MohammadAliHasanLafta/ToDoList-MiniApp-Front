@@ -209,14 +209,16 @@ export default {
       try {
         console.log("reponse : "+contact.response);
         const decodedData = decodeURIComponent(contact.response);
+
+        this.contactRequest = decodedData;
         console.log("decodedData : "+decodedData);
+        
         const params = new URLSearchParams(decodedData);
         const contactJson = params.get("contact");
 
         if (contactJson) {
           const contactData = JSON.parse(contactJson);
           this.mobile = contactData.phone.replace("98", "0", 1);
-          this.contactRequest = decodedData;
 
           this.verifyContact();
 

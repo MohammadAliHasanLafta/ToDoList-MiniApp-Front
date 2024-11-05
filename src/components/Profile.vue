@@ -195,11 +195,7 @@ export default {
             'accept': '*/*'
           }
         });
-        if (response.status == 200) {
-          this.mobile = response.data;
-          console.log("mobile : "+this.mobile);
-          
-        } else {
+        if (error.response.status == 200) {
           et.requestContact((isShared) => {
             if (!isShared) {
               sessionStorage.setItem("isPhoneShared", "false");
@@ -209,6 +205,10 @@ export default {
           et.onEvent("contactRequested", (contact) => {
             this.sendMessengerPhone(contact);
           });
+          
+        } else {
+          this.mobile = response.data;
+          console.log("mobile : "+this.mobile);
         }
       } catch (error) {
         console.error("Error checking user phone:", error);
