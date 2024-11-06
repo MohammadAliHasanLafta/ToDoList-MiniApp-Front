@@ -513,6 +513,22 @@ export default {
 </script>
 
 <style>
+.light-mode {
+  --background-color: #ffffff;
+  --text-color: #333333;
+  --navbar-background: #ffffff;
+  --navbar-text: #333333;
+  --icon-color: #FF8100;
+}
+
+.dark-mode {
+  --background-color: #2c2c2c6c;
+  --text-color: #333333;
+  --navbar-background: #3c3c3c;
+  --navbar-text: #f1f1f1;
+  --icon-color: #FFAB49;
+}
+
 @font-face {
   font-family: 'Sahel';
   src: url('../src/assets/font/Sahel.woff') format('woff'),
@@ -534,16 +550,13 @@ export default {
   display: flex;
   justify-content: center;
   align-items: center;
-  
-  background-image: 
-  url('https://todolistminiapp.netlify.app/background-72f6ad1d%201.svg');
-  background-size:cover;
+  background-image: url('https://todolistminiapp.netlify.app/background-72f6ad1d%201.svg');
+  background-size: cover;
   background-position: center;
-  background-repeat:repeat;
-  background-color: #ffffff;
+  background-repeat: repeat;
   background-blend-mode: multiply;
-  
-
+  background-color: var(--background-color); /* متغیر پس‌زمینه بر اساس حالت انتخاب شده */
+  color: var(--text-color); /* رنگ متن بر اساس حالت انتخاب شده */
 }
 
 @keyframes slideUp {
@@ -576,4 +589,25 @@ export default {
   animation: slideDown 0.5s ease-out forwards;
 }
 
+nav {
+  background-color: var(--navbar-background); /* رنگ پس‌زمینه نوار ناوبری */
+  color: var(--navbar-text); /* رنگ متن نوار ناوبری */
+  border-top: 1px solid var(--text-color); /* رنگ مرزی */
+}
+
+nav a {
+  color: var(--navbar-text); /* رنگ لینک‌ها در نوار ناوبری */
+}
+
+nav a.active-class {
+  color: var(--icon-color); /* رنگ آیکون فعال */
+}
+
+.bg-#FF8100 {
+  background-color: var(--button-background) !important; /* دکمه‌ها در حالت عادی */
+}
+
+.bg-#FF8100:hover {
+  background-color: var(--button-hover) !important; /* دکمه‌ها در حالت هاور */
+}
 </style>
