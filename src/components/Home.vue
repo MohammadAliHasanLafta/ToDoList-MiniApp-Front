@@ -3,7 +3,7 @@
       <div class="p-6 w-full max-w-xs mx-auto mt-4 text-center">
           <h2 class="text-2xl font-bold text-gray-800 mb-4">لیست کارهای شما</h2>
 
-          <div v-if="todos.length === 0" class="text-center mb-4 text-gray-500">
+          <div v-if="todos.length === 0" class="text-center mb-4 text-gray-500" dir="rtl">
               <p>هیچ کاری ثبت نشده است.</p>
           </div>
 
