@@ -1,42 +1,42 @@
 <template>
-  <div @click.self="closeMenu" class="h-screen w-screen flex justify-center items-center bg-[#ffffff9f]">
-    <div class=" p-6  w-full max-w-md mx-auto mt-12 text-center">
-      <h2 class="text-2xl font-bold text-gray-800 mb-6">لیست کارهای شما</h2>
+  <div @click.self="closeMenu" class="h-screen w-screen flex justify-center items-start bg-[#ffffff9f]">
+      <div class="p-6 w-full max-w-xs mx-auto mt-4 text-center">
+          <h2 class="text-2xl font-bold text-gray-800 mb-4">لیست کارهای شما</h2>
 
-      <div v-if="todos.length === 0" class="text-center mb-4 text-gray-500">
-        <p>هیچ کاری ثبت نشده است.</p>
+          <div v-if="todos.length === 0" class="text-center mb-4 text-gray-500">
+              <p>هیچ کاری ثبت نشده است.</p>
+          </div>
+
+          <div class="custom-scroll overflow-y-auto">
+              <ul class="space-y-3" dir="rtl">
+                  <li
+                      v-for="todo in todos"
+                      :key="todo.id"
+                      class="flex justify-between items-center bg-gray-50 p-2 rounded-lg shadow-sm hover:bg-gray-100 transition">
+                      
+                      <span 
+                          :class="{ 'line-through text-gray-400': todo.isComplete }" 
+                          class="flex-1 text-right text-lg font-medium text-gray-700 pr-2">
+                          {{ todo.context }}
+                      </span>
+                      
+                      <div class="flex space-x-2">
+                          <button
+                              @click="updateTodo(todo)"
+                              class="text-blue-500 p-2">
+                              <i :class="todo.isComplete ? 'fas fa-undo' : 'fas fa-check'"></i>
+                          </button>
+
+                          <button
+                              @click="deleteTodo(todo.id)"
+                              class="text-red-500 p-2">
+                              <i class="fas fa-trash-alt"></i>
+                          </button>
+                      </div>
+                  </li>
+              </ul>
+          </div> 
       </div>
-
-      <div v-else class="overflow-y-auto max-h-64">
-        <ul class="space-y-3" dir="rtl">
-          <li
-            v-for="todo in todos"
-            :key="todo.id"
-            class="flex justify-between items-center bg-gray-50 p-2 rounded-lg shadow-sm hover:bg-gray-100 transition">
-            
-            <span 
-              :class="{ 'line-through text-gray-400': todo.isComplete }" 
-              class="flex-1 text-right text-lg font-medium text-gray-700 pr-2">
-              {{ todo.context }}
-            </span>
-            
-            <div class="flex space-x-2">
-              <button
-                @click="updateTodo(todo)"
-                class="text-blue-500 p-2">
-                <i :class="todo.isComplete ? 'fas fa-undo' : 'fas fa-check'"></i>
-              </button>
-
-              <button
-                @click="deleteTodo(todo.id)"
-                class="text-red-500 p-2">
-                <i class="fas fa-trash-alt"></i>
-              </button>
-            </div>
-          </li>
-        </ul>
-      </div> 
-    </div>
   </div>
 </template>
 
@@ -150,5 +150,27 @@ export default {
 <style>
 .line-through {
   text-decoration: line-through;
+}
+.custom-scroll {
+  max-height: calc(90vh - 8rem); /* محدود کردن ارتفاع به اندازه صفحه */
+  overflow-y: auto;
+}
+
+.custom-scroll::-webkit-scrollbar {
+  width: 8px;
+}
+
+.custom-scroll::-webkit-scrollbar-track {
+  background: #f0f0f0;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb {
+  background-color: #ff9500;
+  border-radius: 10px;
+  border: 2px solid #f0f0f0;
+}
+
+.custom-scroll::-webkit-scrollbar-thumb:hover {
+  background-color: #ff7a00;
 }
 </style>
