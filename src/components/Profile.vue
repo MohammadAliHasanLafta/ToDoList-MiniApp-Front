@@ -8,17 +8,17 @@
         </button>
         <div
           v-if="isMenuOpen"
-          class="absolute top-12 right-4 bg-white border border-gray-200 shadow-lg rounded-lg w-40 z-10">
-          <button @click="showEditModal = true; isMenuOpen = false" class="w-full text-green-700 text-center px-4 py-2 hover:bg-gray-100">
-            <i class="fa-solid fa-pen"></i>
+          class="absolute top-12 right-4 bg-white border border-gray-200 shadow-lg rounded-lg w-44 z-10" dir="rtl">
+          <button @click="showEditModal = true; isMenuOpen = false" class="w-full text-right text-gray-800 px-4 py-2 hover:bg-gray-100">
+            <i class="fa-solid fa-pen pl-4"></i>
             ویرایش پروفایل
           </button>
-          <button @click="signOut" class="w-full text-center text-yellow-500 px-4 py-2 hover:bg-gray-100">
-            <i class="fa-solid fa-gear"></i>
+          <button @click="signOut" class="w-full text-right text-gray-800 px-4 py-2 hover:bg-gray-100">
+            <i class="fa-solid fa-gear pl-4"></i>
             تنظیمات
           </button>
-          <button @click="signOut" class="w-full text-center text-red-700 px-4 py-2 hover:bg-gray-100">
-            <i class="fa-solid fa-right-from-bracket"></i>
+          <button @click="signOut" class="w-full text-right text-gray-800 px-4 py-2 hover:bg-gray-100 hover:text-red-600">
+            <i class="fa-solid fa-right-from-bracket pl-4"></i>
             خروج از حساب
           </button>
         </div>
