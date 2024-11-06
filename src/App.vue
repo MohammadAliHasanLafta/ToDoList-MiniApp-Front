@@ -138,6 +138,18 @@
     </form>
   </div>
 </div>
+<div v-if="settingshow" class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+  <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
+    <h2 class="text-2xl font-semibold mb-4" dir="rtl">تنظیمات</h2>
+    <div class="mb-4">
+      <label class="block text-gray-600 font-semibold pb-2" dir="rtl">تغییر حالت نمایش</label>
+      <select v-model="theme" @change="applyTheme" class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F37F00]">
+        <option value="light">حالت روشن</option>
+        <option value="dark">حالت تاریک</option>
+      </select>
+    </div>
+  </div>
+</div>
 
   </div>
 </template>
@@ -172,6 +184,8 @@ export default {
       log: null,
       isDrawerOpen: false,
       isAnimating: false,
+      settingshow: false,
+      theme: 'light',
     };
   },
   async mounted() {
@@ -193,13 +207,36 @@ export default {
           path: '/',
         });
       });
+      window.Eitaa.WebApp.SettingsButton.show();
+      window.Eitaa.WebApp.SettingsButton.onClick(() =>{
+        this.openSettings()
+        this.settingshow = true;
+      });
     } else {
       this.showOtp = true;  
     }
 
     this.checkAndRequestContact();
+    this.applyTheme(); 
   },
   methods: {
+    openSettings() {
+      this.settingshow = true;
+    },
+    closeSettings() {
+      this.settingshow = false;
+    },
+    applyTheme() {
+      const themeClass = this.theme === 'dark' ? 'dark-mode' : 'light-mode';
+      document.documentElement.classList.remove('light-mode', 'dark-mode');
+      document.documentElement.classList.add(themeClass);
+      localStorage.setItem('theme', this.theme); // ذخیره حالت در لوکال استوریج
+      this.closeSettings();
+    },
+    toggleTheme() {
+      this.theme = this.theme === 'light' ? 'dark' : 'light';
+      this.applyTheme();
+    },
     async sendMessengerPhone(contact) {
       try {
         console.log("reponse : "+contact.response);
