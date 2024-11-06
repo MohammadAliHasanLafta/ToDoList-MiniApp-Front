@@ -484,8 +484,8 @@ export default {
 <style>
 @font-face {
   font-family: 'Sahel';
-  src: url('../src/assets/font/Sahel-Black.woff') format('woff'),
-       url('../src/assets/font/Sahel-Black.ttf') format('truetype');
+  src: url('../src/assets/font/Sahel.woff') format('woff'),
+       url('../src/assets/font/Sahel.ttf') format('truetype');
   font-weight: lighter;
   font-style:unset;
 }

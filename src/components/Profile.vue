@@ -283,7 +283,6 @@ export default {
 </script>
 
 <style scoped>
-/* Toggle Switch Styling */
 .switch {
   position: relative;
   display: inline-block;
@@ -328,7 +327,6 @@ input:checked + .slider:before {
   transform: translateX(18px);
 }
 
-/* Menu Dropdown */
 .absolute {
   position: absolute;
 }
@@ -365,7 +363,7 @@ input:checked + .slider:before {
   top: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0, 0, 0, 0.7); /* پس‌زمینه تیره‌تر */
+  background-color: rgba(0, 0, 0, 0.7); 
   align-items: center;
   justify-content: center;
 }
@@ -380,7 +378,7 @@ input:checked + .slider:before {
   font-family: Arial, sans-serif;
   color: #333;
   animation: fadeIn 0.3s ease-in-out;
-  direction: rtl; /* تنظیم جهت به RTL برای متن راست‌چین */
+  direction: rtl; 
 }
 
 @keyframes fadeIn {
@@ -406,7 +404,7 @@ input:checked + .slider:before {
 
 .close {
   position: absolute;
-  right: 0; /* قرار دادن آیکون بستن در سمت راست */
+  right: 0;
   color: #aaa;
   font-size: 24px;
   font-weight: bold;
@@ -416,46 +414,45 @@ input:checked + .slider:before {
 
 .close:hover,
 .close:focus {
-  color: #FF5C5C; /* رنگ قرمز برای آیکون بستن در حالت هاور */
+  color: #FF5C5C; 
 }
 
 .modal-body {
   font-size: 1rem;
   color: #666;
-  text-align: right; /* تراز راست برای متن تسک‌ها */
+  text-align: right;
 }
 
 .modal-body ul {
-  list-style-type: decimal; /* نمایش لیست به صورت شماره‌دار */
-  list-style-position: inside; /* نمایش اعداد داخل لیست */
+  list-style-type: decimal;
+  list-style-position: inside; 
   padding: 0;
   margin: 0;
-  max-height: 200px; /* حداکثر ارتفاع لیست برای افزودن اسکرول‌بار */
-  overflow-y: auto; /* فعال کردن اسکرول عمودی زمانی که لیست بلند باشد */
+  max-height: 200px; 
+  overflow-y: auto; 
 }
 
 .modal-body ul li {
   padding: 10px 0;
   border-bottom: 1px solid #eee;
-  text-align: right; /* راست‌چین کردن تسک‌ها */
+  text-align: right;
 }
 
 .modal-body ul li:last-child {
   border-bottom: none;
 }
 
-/* شخصی‌سازی اسکرول‌بار برای مرورگرهای WebKit (مثل Chrome و Safari) */
 .modal-body ul::-webkit-scrollbar {
-  width: 6px; /* عرض اسکرول‌بار */
+  width: 6px;
 }
 
 .modal-body ul::-webkit-scrollbar-thumb {
-  background-color: #F37F00; /* رنگ اسکرول‌بار */
-  border-radius: 10px; /* گرد کردن لبه‌های اسکرول‌بار */
+  background-color: #F37F00;
+  border-radius: 10px;
 }
 
 .modal-body ul::-webkit-scrollbar-track {
-  background-color: #f1f1f1; /* رنگ پس‌زمینه اسکرول‌بار */
+  background-color: #f1f1f1;
 }
 
 
