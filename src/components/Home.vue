@@ -89,7 +89,7 @@ export default {
         console.error('مشکل در دریافت لیست کارها:', error);
         this.error = 'خطا در دریافت لیست کارها';
       }
-      this.todos = todos;
+      this.todos = todos.reverse();
     },
     async addTodo() {
       if (this.newTodoTitle.trim() !== '') {
