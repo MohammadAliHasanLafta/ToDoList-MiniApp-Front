@@ -213,21 +213,76 @@
       v-if="settingshow"
       class="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50"
     >
-      <div class="bg-white p-6 rounded-lg shadow-lg w-full max-w-md">
-        <h2 class="text-2xl font-semibold mb-4" dir="rtl">تنظیمات</h2>
+      <div class="relative bg-white p-6 rounded-lg shadow-lg w-4/5 max-w-md">
+        <!-- دکمه بستن (ضربدر) -->
+        <button
+          @click="settingshow = false"
+          class="absolute top-3 left-3 text-gray-600 hover:text-red-600 text-2xl font-bold"
+        >
+          ✖
+        </button>
+
+        <h2 class="text-2xl font-semibold mb-4 text-right">تنظیمات</h2>
+
+        <!-- تغییر حالت نمایش -->
         <div class="mb-4">
-          <label class="block text-gray-600 font-semibold pb-2" dir="rtl"
-            >تغییر حالت نمایش</label
-          >
+          <label class="block text-gray-600 font-semibold pb-2 text-right">
+            تغییر حالت نمایش
+          </label>
           <select
             v-model="theme"
             @change="applyTheme"
-            class="w-full p-3 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F37F00]"
+            class="w-full p-1 border rounded-lg focus:outline-none focus:ring-2 focus:ring-[#F37F00]"
           >
             <option value="light">حالت روشن</option>
             <option value="dark">حالت تاریک</option>
           </select>
         </div>
+
+        <!-- انتخاب رنگ هدر و نوار پایین -->
+        <div class="mb-4">
+          <label class="block text-gray-600 font-semibold pb-2 text-right">
+            انتخاب رنگ نوار بالا و پایین
+          </label>
+          <div class="flex gap-2 flex-wrap justify-center">
+            <button
+              v-for="color in colors"
+              :key="color"
+              @click="changeAppColor(color)"
+              :style="{ backgroundColor: color }"
+              class="w-10 h-10 rounded-full border border-gray-300"
+            ></button>
+          </div>
+          <!-- <p class="mt-2 text-center text-gray-600">
+            رنگ انتخاب‌شده:
+            <span :style="{ color: selectedColor }">{{ selectedColor }}</span>
+          </p> -->
+        </div>
+
+        <!-- دکمه‌های تنظیمات -->
+        <button
+          type="button"
+          class="mt-2 w-full bg-gray-200 text-gray-600 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300"
+          @click="applyFullscreen"
+        >
+          {{ buttonText_fullscreen }}
+        </button>
+
+        <button
+          type="button"
+          class="mt-2 w-full bg-gray-200 text-gray-600 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300"
+          @click="applyMainbutton"
+        >
+          {{ buttonText_mainbutton }}
+        </button>
+
+        <button
+          type="button"
+          class="mt-2 w-full bg-gray-200 text-gray-600 font-semibold py-2 px-4 rounded-lg hover:bg-gray-300"
+          @click="applyHomescreen"
+        >
+          افزودن به صفحه اصلی
+        </button>
       </div>
     </div>
   </div>
@@ -243,6 +298,8 @@ export default {
   },
   data() {
     return {
+      isFullscreen: window.Eitaa.WebApp.isFullscreen || false,
+      showMainbutton: true,
       hasPhone: false,
       click: false,
       isLoading: false,
@@ -265,7 +322,17 @@ export default {
       isAnimating: false,
       settingshow: false,
       theme: "light",
+      selectedColor: "#F37F00",
+      colors: ["#FF8100", "#1E90FF", "#32CD32", "#FF4500", "#FFD700"],
     };
+  },
+  computed: {
+    buttonText_fullscreen() {
+      return this.isFullscreen ? "خروج از تمام صفحه" : "تمام صفحه";
+    },
+    buttonText_mainbutton() {
+      return this.showMainbutton ? "نمایش دکمه اصلی" : "مخفی کردن دکمه اصلی";
+    },
   },
   async mounted() {
     const et = window.Eitaa.WebApp;
@@ -280,7 +347,6 @@ export default {
         color: "#FF8100",
         text_color: "#FFFFFF",
       });
-      window.Eitaa.WebApp.MainButton.show();
       window.Eitaa.WebApp.MainButton.onClick(() => {
         this.$router.push({
           path: "/",
@@ -288,8 +354,11 @@ export default {
       });
       window.Eitaa.WebApp.SettingsButton.show();
       window.Eitaa.WebApp.SettingsButton.onClick(() => {
-        this.openSettings();
-        this.settingshow = true;
+        if (!this.settingshow) {
+          this.settingshow = true;
+        } else {
+          this.settingshow = false;
+        }
       });
     } else {
       this.showOtp = true;
@@ -311,6 +380,32 @@ export default {
       document.documentElement.classList.add(themeClass);
       localStorage.setItem("theme", this.theme); // ذخیره حالت در لوکال استوریج
       this.closeSettings();
+    },
+    applyFullscreen() {
+      if (!window.Eitaa.WebApp.isFullscreen) {
+        window.Eitaa.WebApp.requestFullscreen();
+        this.isFullscreen = !this.isFullscreen;
+      } else {
+        window.Eitaa.WebApp.exitFullscreen();
+        this.isFullscreen = !this.isFullscreen;
+      }
+    },
+    applyMainbutton() {
+      if (this.showMainbutton) {
+        window.Eitaa.WebApp.MainButton.show();
+      } else {
+        window.Eitaa.WebApp.MainButton.hide();
+      }
+      this.showMainbutton = !this.showMainbutton;
+    },
+    applyHomescreen() {
+      window.Eitaa.WebApp.addToHomeScreen();
+      this.settingshow = false;
+    },
+    changeAppColor(color) {
+      this.selectedColor = color;
+      window.Eitaa.WebApp.setHeaderColor(color);
+      window.Eitaa.WebApp.setBottomBarColor(color);
     },
     toggleTheme() {
       this.theme = this.theme === "light" ? "dark" : "light";
